@@ -1,2 +1,13 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using System;
+
+namespace NashTechAssignment
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var app = new App();
+            app.Run();
+        }
+    }
+}
