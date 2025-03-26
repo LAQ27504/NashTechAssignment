@@ -1,0 +1,46 @@
+# Build artifacts
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs and database
+*.log
+logs/
+db/*.mdf
+db/*.ldf
+
+# Visual Studio specific
+.vscode/
+.vs/
+
+# Rider / JetBrains IDE
+.idea/
+*.sln.iml
+
+# NuGet dependencies
+packages/
+*.nupkg
+project.lock.json
+
+# Resharper files
+*.DotSettings.user
+
+# Debugging
+*.pdb
+
+# Temporary files
+*.bak
+*.cache
+*.swp
+
+# Publish output
+publish/
+
+# Environment files
+.env
+.env.*
