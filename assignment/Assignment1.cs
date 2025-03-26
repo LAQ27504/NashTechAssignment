@@ -157,6 +157,7 @@ namespace NashTechAssignment
             Console.WriteLine("Enter car model:");
             Console.Write("> ");
             model = Console.ReadLine();
+
             while (model.Length == 0)
             {
                 Console.WriteLine("Car model cannot be null!!! Please try again.");
