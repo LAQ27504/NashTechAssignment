@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
-using System.Xml.Serialization;
-
-
 namespace NashTechAssignment
 {
     class App
@@ -144,8 +138,8 @@ namespace NashTechAssignment
             make = Console.ReadLine();
             while (make.Length == 0)
             {
-                Console.Write("> ");
                 Console.WriteLine("Car make cannot be null!!! Please try again.");
+                Console.Write("> ");
                 make = Console.ReadLine();
             }
             return make;
@@ -176,10 +170,10 @@ namespace NashTechAssignment
             Console.Write("> ");
             carTypeInput = Console.ReadLine();
             CarType carType;
-            while (!Enum.TryParse(carTypeInput, true, out carType))
+            while (!Enum.TryParse(carTypeInput, out carType))
             {
-                Console.Write("> ");
                 Console.WriteLine("Invalid car type. Please enter 'Fuel' or 'Electric':");
+                Console.Write("> ");
                 carTypeInput = Console.ReadLine();
             }
 
@@ -192,7 +186,8 @@ namespace NashTechAssignment
 
             Console.WriteLine("Enter car year:");
             Console.Write("> ");
-            while (!int.TryParse(Console.ReadLine(), out year))
+            int currentYear = DateTime.Now.Year;
+            while (!int.TryParse(Console.ReadLine(), out year) || year < 1900 || year > currentYear)
             {
                 Console.WriteLine("Invalid year. Please enter a valid year:");
                 Console.Write("> ");
