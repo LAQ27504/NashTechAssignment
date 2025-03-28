@@ -76,26 +76,54 @@ namespace NashTechAssignment
             string model;
             int year;
             CarType carType;
+            DateTime lastMaintanenceTime;
+
 
             make = GetUserMake();
 
             model = GetUserModel();
+            year = GetUserYear();
+
+            lastMaintanenceTime = GetUserLastMaintenanceDate(year);
 
             carType = GetUserType();
 
-            year = GetUserYear();
+            switch (carType)
+            {
+                case CarType.Fuel:
+                    Console.WriteLine("You have selected a Fuel car.");
+                    FuelCar fuelCar = new FuelCar(make, model, year, lastMaintanenceTime);
 
-            Car newCar = new Car(make, model, year, carType);
+                    fuelCar.DisplayDetails();
 
-            carManager.AddCar(newCar);
+                    RefillCar(fuelCar);
 
+                    carManager.AddCar(fuelCar);
+
+                    break;
+                case CarType.Electric:
+                    Console.WriteLine("You have selected an Electric car.");
+                    ElectricCar electricCar = new ElectricCar(make, model, year, lastMaintanenceTime);
+
+                    electricCar.DisplayDetails();
+
+                    RefillCar(electricCar);
+
+                    carManager.AddCar(electricCar);
+
+                    break;
+                default:
+                    Console.WriteLine("Invalid car type selected.");
+                    break;
+            }
+            //Car newCar = new Car(make, model, year, lastMaintanenceTime);
             Console.WriteLine("Press Enter to Continue.");
             Console.ReadLine();
         }
 
         public void ViewAllCar()
         {
-            carManager.DisplayAllCars();
+            carManager.ViewAllCars();
             Console.WriteLine("Press Enter to Continue.");
             Console.ReadLine();
         }
@@ -103,7 +131,7 @@ namespace NashTechAssignment
         public void SearchCarByMake()
         {
             string make = GetUserMake();
-            Car makedCar = carManager.FindCarByMake(make);
+            List<Car> makedCar = carManager.SearchCarByMake(make);
             if (makedCar == null)
             {
                 Console.WriteLine("Sorry, your operation cannot be process due to lack of information");
@@ -112,7 +140,7 @@ namespace NashTechAssignment
                 return;
             }
             Console.WriteLine($"Here is the car from {make}");
-            Console.WriteLine(makedCar);
+            carManager.DisplayCarList(makedCar);
             Console.WriteLine("Press Enter to Continue.");
             Console.ReadLine();
         }
@@ -127,6 +155,47 @@ namespace NashTechAssignment
             Console.ReadLine();
         }
 
+
+        public void RefillCar(Car car)
+        {
+
+            Console.WriteLine("Do you want to refuel/charge the car ? (Y/N): ");
+            string userInput = Console.ReadLine()?.Trim().ToUpper();
+            while (userInput != "Y" && userInput != "N")
+            {
+                Console.WriteLine("Invalid input. Please enter 'Y' for Yes or 'N' for No:");
+                Console.Write("> ");
+                userInput = Console.ReadLine()?.Trim().ToUpper();
+            }
+
+            if (userInput == "N")
+            {
+                return;
+            }
+
+            Console.WriteLine("Enter the date and time for refuel/charge (yyyy-MM-dd HH:mm):");
+            Console.Write("> ");
+            DateTime refuelOrChargeDateTime;
+            DateTime currentTime = DateTime.Now;
+            while (!DateTime.TryParseExact(Console.ReadLine(), "yyyy-MM-dd HH:mm", null, System.Globalization.DateTimeStyles.None, out refuelOrChargeDateTime) || refuelOrChargeDateTime < currentTime)
+            {
+                Console.WriteLine("Invalid date and time format. Please enter in the format yyyy/MM/dd HH:mm and time should be after current time:");
+                Console.Write("> ");
+            }
+
+
+            if (car is IFuelable fuelableCar)
+            {
+                fuelableCar.Refuel(refuelOrChargeDateTime);
+
+            }
+
+            else if (car is IChargable chargeableCar)
+            {
+                chargeableCar.Charge(refuelOrChargeDateTime);
+
+            }
+        }
 
 
         // Supportive function for handle user input 
@@ -169,8 +238,11 @@ namespace NashTechAssignment
             Console.WriteLine("Enter car type (Fuel/Electric)");
             Console.Write("> ");
             carTypeInput = Console.ReadLine();
+
             CarType carType;
-            while (!Enum.TryParse(carTypeInput, out carType))
+            int invalid;
+
+            while (!Enum.TryParse(carTypeInput, out carType) || int.TryParse(carTypeInput, out invalid))
             {
                 Console.WriteLine("Invalid car type. Please enter 'Fuel' or 'Electric':");
                 Console.Write("> ");
@@ -187,14 +259,28 @@ namespace NashTechAssignment
             Console.WriteLine("Enter car year:");
             Console.Write("> ");
             int currentYear = DateTime.Now.Year;
-            while (!int.TryParse(Console.ReadLine(), out year) || year < 1900 || year > currentYear)
+            while (!int.TryParse(Console.ReadLine(), out year) || year < 1886 || year > currentYear)
             {
-                Console.WriteLine("Invalid year. Please enter a valid year:");
+                Console.WriteLine("Invalid year. Please enter a valid year between 1886 and the current year:");
                 Console.Write("> ");
             }
 
             return year;
         }
 
+        public DateTime GetUserLastMaintenanceDate(int carYear)
+        {
+
+            DateTime lastMaintenanceDate;
+            Console.WriteLine("Enter last maintenance date (yyyy-MM-dd):");
+
+            Console.Write("> ");
+            while (!DateTime.TryParseExact(Console.ReadLine(), "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out lastMaintenanceDate) || lastMaintenanceDate.Year < carYear)
+            {
+                Console.WriteLine("Invalid date or the date is before the car's year. Please enter a valid date (yyyy-MM-dd) that is equal to or after the car's year:");
+                Console.Write("> ");
+            }
+            return lastMaintenanceDate;
+        }
     }
 }
