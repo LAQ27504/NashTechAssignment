@@ -1,4 +1,4 @@
-namespace NashTechAssignment
+namespace CarAPI
 {
     public class CarManagement
     {

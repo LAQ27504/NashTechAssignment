@@ -1,5 +1,5 @@
 
-namespace NashTechAssignment
+namespace CarAPI
 {
     public class FuelCar : Car, IFuelable, IShowRefill
     {
@@ -16,7 +16,6 @@ namespace NashTechAssignment
 
         public void Refuel(DateTime timeOfRefuel)
         {
-
             refuelTime = timeOfRefuel;
             ShowRefillTime();
         }
