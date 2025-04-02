@@ -11,6 +11,7 @@ namespace NashTechRookie.Controllers
 
         public PersonController(IPersonService personService, IPerson person)
         {
+            _person = person;
             //_person = person;
             _personService = personService;
         }
@@ -89,27 +90,46 @@ namespace NashTechRookie.Controllers
             return File(fileResponse.FileContent, fileResponse.ContentType, fileResponse.FileName);
         }
 
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Person person)
         {
-            _person.Create(person);
+            Console.WriteLine("Person");
+            Console.WriteLine(person);
+            if (person != null)
+            {
+                _person.Create(person);
+                return RedirectToAction("Index");
+            }
+            return View(person);
+        }
+
+        public IActionResult Edit(Person person)
+        {
+            _person.Update(person);
 
             return View(person);
         }
 
-        public IActionResult Edit()
+
+        public IActionResult Delete(Person person)
         {
-            return View();
+            _person.Delete(person);
+
+            return View(person);
         }
 
-        public IActionResult Delete()
-        {
-            return View();
-        }
 
         public IActionResult ListAll()
         {
-            var persons = _personService.GetAll();
+            var persons = _person.ListAll();
 
             return View(persons);
         }

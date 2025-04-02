@@ -1,11 +1,10 @@
-@model IEnumerable<NashTechRookie.Models.Person>
+@model NashTechRookie.Models.Person
 
 @{
     ViewData["Title"] = "Oldest Person";
 }
 
 <h1>Oldest Person</h1>
-
 <table class="table">
     <thead>
         <tr>
@@ -21,19 +20,16 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var person in Model)
-        {
-            <tr>
-                <td>@person.Id</td>
-                <td>@person.FirstName</td>
-                <td>@person.LastName</td>
-                <td>@person.FullName</td>
-                <td>@person.Gender</td>
-                <td>@person.DateOfBirthString</td>
-                <td>@person.PhoneNumber</td>
-                <td>@person.BirthPlace</td>
-                <td>@person.IsGraduated</td>
-            </tr>
-        }
+        <tr>
+            <td>@Model.Id</td>
+            <td>@Model.FirstName</td>
+            <td>@Model.LastName</td>
+            <td>@Model.FullName</td>
+            <td>@Model.Gender</td>
+            <td>@Model.DateOfBirthString</td>
+            <td>@Model.PhoneNumber</td>
+            <td>@Model.BirthPlace</td>
+            <td>@Model.IsGraduatedString</td>
+        </tr>
     </tbody>
 </table>

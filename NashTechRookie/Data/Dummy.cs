@@ -5,7 +5,7 @@ namespace NashTechRookie.Data;
 public class PersonData
 {
 
-    public List<Person> Persons { get; } =
+    public static List<Person> Persons { get; set; } =
     [
         new(1,"Rebecca", "Chambers", Gender.Female, new DateTime(1994, 9, 9), "901-234-5678", "Dallas", true),
         new(2,"Albert", "Wesker", Gender.Male, new DateTime(2000, 10, 10), "012-345-6789", "Austin", false),

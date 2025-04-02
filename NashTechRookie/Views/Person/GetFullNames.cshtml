@@ -1,4 +1,4 @@
-@model IEnumerable<NashTechRookie.Models.Person>
+@model IEnumerable<string>
 
 @{
     ViewData["Title"] = "Full Names";
@@ -9,26 +9,14 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Id</th>
             <th>Full Name</th>
-            <th>Gender</th>
-            <th>Date of Birth</th>
-            <th>Phone Number</th>
-            <th>Birth Place</th>
-            <th>Graduated</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var person in Model)
+        @foreach (var fullName in Model)
         {
             <tr>
-                <td>@person.Id</td>
-                <td>@person.FullName</td>
-                <td>@person.Gender</td>
-                <td>@person.DateOfBirthString</td>
-                <td>@person.PhoneNumber</td>
-                <td>@person.BirthPlace</td>
-                <td>@person.IsGraduated</td>
+                <td>@fullName</td>
             </tr>
         }
     </tbody>

@@ -11,8 +11,10 @@ namespace NashTechRookie.Models
             Person person
         );
 
-        void Delete();
+        void Delete(
+            Person person
+        );
 
-        List<IPerson> ListAll();
+        List<Person> ListAll();
     }
 }

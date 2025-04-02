@@ -10,5 +10,7 @@ namespace NashTechRookie.Services
         IEnumerable<string> GetPersonsFullName();
         IEnumerable<Person>? GetPersonsByBirthYearWithAction(string action);
         FileModel ExportToExcel();
+
+        int GetLastId();
     }
 }

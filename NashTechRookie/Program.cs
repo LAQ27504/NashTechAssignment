@@ -1,9 +1,11 @@
+using NashTechRookie.Models;
 using NashTechRookie.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IPersonService, PersonService>();
+builder.Services.AddScoped<IPerson, PersonService>();
 builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
@@ -18,6 +20,16 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path == "/")
+    {
+        context.Response.Redirect("/NashTech");
+        return;
+    }
+    await next();
+});
 
 app.UseRouting();
 

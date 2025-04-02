@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 
 namespace NashTechRookie.Models
 {
@@ -5,17 +6,35 @@ namespace NashTechRookie.Models
     public class Person
     {
         public int Id { get; set; }
-        public string? FirstName { get; }
-        public string? LastName { get; }
+
+        [Required]
+        public string FirstName { get; set; }
+
+        [Required]
+        public string LastName { get; set; }
         public string FullName => $"{LastName} {FirstName}";
+
+        [Required]
         public Gender Gender { get; set; }
+
+        [Required]
         public DateTime DateOfBirth { get; set; }
-        public string? PhoneNumber { get; set; }
-        public string? BirthPlace { get; set; }
+
+        [Required]
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        public string BirthPlace { get; set; }
+
         public bool IsGraduated { get; set; }
 
         public string IsGraduatedString => IsGraduated ? "Yes" : "No";
         public string DateOfBirthString => DateOfBirth.ToString("dd/MM/yyyy");
+
+        public Person()
+        {
+
+        }
 
         public Person(
         int id,
@@ -36,5 +55,6 @@ namespace NashTechRookie.Models
             BirthPlace = birthPlace;
             IsGraduated = isGraduated;
         }
+
     }
 }
