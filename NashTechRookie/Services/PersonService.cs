@@ -8,6 +8,11 @@ namespace NashTechRookie.Services
     {
         private readonly PersonData _personData = new();
 
+        public List<Person> GetAll()
+        {
+            return _personData.Persons.ToList();
+        }
+
         public IEnumerable<Person> GetMales()
         {
             var malePersons = _personData.Persons.Where(mp => mp.Gender == Gender.Male);

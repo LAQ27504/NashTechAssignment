@@ -1,18 +1,23 @@
+
 namespace NashTechRookie.Models
 {
 
     public class Person
     {
+        public int Id { get; set; }
         public string? FirstName { get; }
         public string? LastName { get; }
         public string FullName => $"{LastName} {FirstName}";
-        public Gender Gender { get; private set; }
-        public DateTime DateOfBirth { get; private set; }
-        public string? PhoneNumber { get; private set; }
-        public string? BirthPlace { get; private set; }
-        public string IsGraduated { get; private set; }
+        public Gender Gender { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? BirthPlace { get; set; }
+        public string IsGraduated { get; set; }
+        public string DateOfBirthString => DateOfBirth.ToString("dd/MM/yyyy");
 
-        public Person(string? firstName,
+        public Person(
+        int id,
+        string? firstName,
         string? lastName,
         Gender gender,
         DateTime dateOfBirth,
@@ -20,6 +25,7 @@ namespace NashTechRookie.Models
         string? birthPlace,
         bool isGraduated)
         {
+            Id = id;
             FirstName = firstName;
             LastName = lastName;
             Gender = gender;
@@ -28,7 +34,25 @@ namespace NashTechRookie.Models
             BirthPlace = birthPlace;
             IsGraduated = isGraduated ? "Yes" : "No";
         }
+
+        // public void Create()
+        // {
+        //     throw new NotImplementedException();
+        // }
+
+        // public void Update()
+        // {
+        //     throw new NotImplementedException();
+        // }
+
+        // public void Delete()
+        // {
+        //     throw new NotImplementedException();
+        // }
+
+        // public List<IPerson> ListAll()
+        // {
+        //     throw new NotImplementedException();
+        // }
     }
-
-
 }
