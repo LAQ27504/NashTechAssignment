@@ -1,5 +1,5 @@
 using ClosedXML.Excel;
-namespace NashTechRookie2.Utils
+namespace NashTechRookie.Utils
 {
     public class FileHelper<T>
     {

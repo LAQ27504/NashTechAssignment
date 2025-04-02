@@ -1,80 +1,77 @@
 using Microsoft.AspNetCore.Mvc;
-using NashTechRookie2.Models;
-using NashTechRookie2.Services;
+using NashTechRookie.Models;
+using NashTechRookie.Services;
 
-namespace NashTechRookie2.Controllers;
-
-[ApiController]
-[Route("NashTech/[controller]")]
-public class PersonController : ControllerBase
+namespace NashTechRookie.Controllers
 {
-    private readonly IPersonService _personService;
-
-    public PersonController(IPersonService personService)
+    public class PersonController : Controller
     {
-        _personService = personService;
-    }
+        private readonly IPersonService _personService;
 
-    [HttpGet("GetMales")]
-    public IEnumerable<Person> GetMale()
-    {
-        return _personService.GetMales();
-    }
-
-    [HttpGet("GetOldestAge")]
-    public Person? GetOldestPerson()
-    {
-        return _personService.GetOldestPerson();
-    }
-
-    [HttpGet("GetFullNames")]
-    public IEnumerable<string> GetFullNames()
-    {
-        return _personService.GetPersonsFullName();
-    }
-
-    [HttpGet("GetBirthYearWithAction")]
-    public IActionResult GetPersonsByBirthYearAction([FromQuery] string action)
-    {
-        if (string.IsNullOrEmpty(action))
+        public PersonController(IPersonService personService)
         {
-            return BadRequest("Action is required");
+            _personService = personService;
         }
 
-        var normalizedAction = action.ToLowerInvariant();
-
-        return normalizedAction switch
+        public IActionResult GetMales()
         {
-            "getbirthyearlower" => RedirectToAction("GetBirthYearLower"),
-            "getbirthyeargreater" => RedirectToAction("GetBirthYearGreater"),
-            "getbirthyearequal" => RedirectToAction("GetBirthYearEqual"),
-            _ => NotFound("Action not found"),
-        };
-    }
+            var males = _personService.GetMales();
+            return View(males);  // Pass data to the View
+        }
 
-    [HttpGet("GetBirthYearLower")]
-    public IEnumerable<Person>? GetBirthYearLower()
-    {
-        return _personService.GetPersonsByBirthYearWithAction("lower");
-    }
+        public IActionResult GetOldestPerson()
+        {
+            var oldestPerson = _personService.GetOldestPerson();
+            return View(oldestPerson);
+        }
 
-    [HttpGet("GetBirthYearGreater")]
-    public IEnumerable<Person>? GetBirthYearGreater()
-    {
-        return _personService.GetPersonsByBirthYearWithAction("greater");
-    }
+        public IActionResult GetFullNames()
+        {
+            var fullNames = _personService.GetPersonsFullName();
+            return View(fullNames);
+        }
 
-    [HttpGet("GetBirthYearEqual")]
-    public IEnumerable<Person>? GetBirthYearEqual()
-    {
-        return _personService.GetPersonsByBirthYearWithAction("equal");
-    }
+        public IActionResult GetBirthYearWithAction(string action)
+        {
+            if (string.IsNullOrEmpty(action))
+            {
+                ViewBag.Message = "Action is required";
+                return View("Error");
+            }
 
-    [HttpPost("ExportToExcel")]
-    public IActionResult ExportToExcel()
-    {
-        var fileResponse = _personService.ExportToExcel();
+            var normalizedAction = action.ToLowerInvariant();
 
-        return File(fileResponse.FileContent, fileResponse.ContentType, fileResponse.FileName);
+            return normalizedAction switch
+            {
+                "getbirthyearlower" => RedirectToAction("GetBirthYearLower"),
+                "getbirthyeargreater" => RedirectToAction("GetBirthYearGreater"),
+                "getbirthyearequal" => RedirectToAction("GetBirthYearEqual"),
+                _ => View("Error", "Action not found"),
+            };
+        }
+
+        public IActionResult GetBirthYearLower()
+        {
+            var persons = _personService.GetPersonsByBirthYearWithAction("lower");
+            return View(persons);
+        }
+
+        public IActionResult GetBirthYearGreater()
+        {
+            var persons = _personService.GetPersonsByBirthYearWithAction("greater");
+            return View(persons);
+        }
+
+        public IActionResult GetBirthYearEqual()
+        {
+            var persons = _personService.GetPersonsByBirthYearWithAction("equal");
+            return View(persons);
+        }
+
+        public IActionResult ExportToExcel()
+        {
+            var fileResponse = _personService.ExportToExcel();
+            return File(fileResponse.FileContent, fileResponse.ContentType, fileResponse.FileName);
+        }
     }
 }

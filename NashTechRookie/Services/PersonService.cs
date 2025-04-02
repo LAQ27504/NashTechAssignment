@@ -1,8 +1,8 @@
-using NashTechRookie2.Data;
-using NashTechRookie2.Utils;
-using NashTechRookie2.Models;
+using NashTechRookie.Data;
+using NashTechRookie.Utils;
+using NashTechRookie.Models;
 
-namespace NashTechRookie2.Services
+namespace NashTechRookie.Services
 {
     public class PersonService : IPersonService
     {

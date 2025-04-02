@@ -1,6 +1,6 @@
-using NashTechRookie2.Models;
+using NashTechRookie.Models;
 
-namespace NashTechRookie2.Services
+namespace NashTechRookie.Services
 {
     public interface IPersonService
     {
