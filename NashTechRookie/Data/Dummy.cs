@@ -1,6 +1,6 @@
-using NashTechRookie.Models;
+using NashTechRookie2.Models;
 
-namespace NashTechRookie.Data;
+namespace NashTechRookie2.Data;
 
 public class PersonData
 {

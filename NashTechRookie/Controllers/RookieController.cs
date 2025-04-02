@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using NashTechRookie.Models;
-using NashTechRookie.Services;
+using NashTechRookie2.Models;
+using NashTechRookie2.Services;
 
-namespace NashTechRookie.Controllers;
+namespace NashTechRookie2.Controllers;
 
 [ApiController]
 [Route("NashTech/[controller]")]

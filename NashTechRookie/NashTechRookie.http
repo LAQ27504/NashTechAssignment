@@ -1,6 +1,0 @@
-@NashTechRookie_HostAddress = http://localhost:5112
-
-GET {{NashTechRookie_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

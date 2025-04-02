@@ -1,4 +1,4 @@
-namespace NashTechRookie.Models
+namespace NashTechRookie2.Models
 {
 
     public class Person
