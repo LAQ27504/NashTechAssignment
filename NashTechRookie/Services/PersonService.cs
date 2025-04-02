@@ -21,7 +21,7 @@ namespace NashTechRookie.Services
 
         public Person GetOldestPerson()
         {
-            var oldestPerson = PersonData.Persons.OrderByDescending(p => p.DateOfBirth).First();
+            var oldestPerson = PersonData.Persons.OrderBy(p => p.DateOfBirth).First();
 
             return oldestPerson;
         }
@@ -62,7 +62,6 @@ namespace NashTechRookie.Services
 
         public void Update(Person person)
         {
-            Console.WriteLine("Update method called");
             var personToUpdate = PersonData.Persons.SingleOrDefault(p => p.Id == person.Id);
             if (personToUpdate != null)
             {
@@ -76,8 +75,17 @@ namespace NashTechRookie.Services
         public void Delete(Person person)
         {
             PersonData.Persons = PersonData.Persons.Where(p => p.Id != person.Id).ToList();
+            UpdateIdForList();
 
             return;
+        }
+
+        public void UpdateIdForList()
+        {
+            for (int i = 0; i < PersonData.Persons.Count; i++)
+            {
+                PersonData.Persons[i].Id = i + 1;
+            }
         }
 
         public List<Person> ListAll()
@@ -88,6 +96,11 @@ namespace NashTechRookie.Services
         public int GetLastId()
         {
             return PersonData.Persons.Any() ? PersonData.Persons.Max(p => p.Id) : 0;
+        }
+
+        public Person? GetPersonById(int id)
+        {
+            return PersonData.Persons.FirstOrDefault(p => p.Id == id);
         }
     }
 }

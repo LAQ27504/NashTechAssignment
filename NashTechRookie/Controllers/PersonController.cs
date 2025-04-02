@@ -111,19 +111,73 @@ namespace NashTechRookie.Controllers
             return View(person);
         }
 
-        public IActionResult Edit(Person person)
+        [HttpGet]
+        public IActionResult Edit(int id)
         {
-            _person.Update(person);
+            var person = _personService.GetPersonById(id);
+            if (person == null)
+            {
+                return NotFound();
+            }
+            return View(person);
+        }
 
+        // POST: Handle the Edit form submission
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, Person person)
+        {
+            if (id != person.Id)
+            {
+                ModelState.AddModelError("", "The ID in the URL does not match the ID of the person being edited.");
+                return View(person);
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _person.Update(person);
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "An error occurred while updating the person: " + ex.Message);
+                }
+            }
             return View(person);
         }
 
 
-        public IActionResult Delete(Person person)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
         {
-            _person.Delete(person);
+            var person = _personService.GetPersonById(id);
+            if (person == null)
+            {
+                return NotFound();
+            }
 
-            return View(person);
+            try
+            {
+                string deletedPersonName = person.FullName; // Store the name before deleting
+                _person.Delete(person);
+                return RedirectToAction("Confirmation", new { deletedPersonName });
+            }
+            catch (Exception ex)
+            {
+                // If deletion fails, redirect back to the Details view with an error message
+                TempData["ErrorMessage"] = $"An error occurred while deleting the person: {ex.Message}";
+                return RedirectToAction("Details", new { id });
+            }
+        }
+
+        // GET: Display the confirmation message after deletion
+        [HttpGet]
+        public IActionResult Confirmation(string deletedPersonName)
+        {
+            return View((object)deletedPersonName);
         }
 
 
@@ -132,6 +186,17 @@ namespace NashTechRookie.Controllers
             var persons = _person.ListAll();
 
             return View(persons);
+        }
+
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            var person = _personService.GetPersonById(id);
+            if (person == null)
+            {
+                return NotFound();
+            }
+            return View(person);
         }
     }
 }

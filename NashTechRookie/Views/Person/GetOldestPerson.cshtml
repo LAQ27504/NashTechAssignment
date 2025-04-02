@@ -17,6 +17,7 @@
             <th>Phone Number</th>
             <th>Birth Place</th>
             <th>Graduated</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -24,12 +25,19 @@
             <td>@Model.Id</td>
             <td>@Model.FirstName</td>
             <td>@Model.LastName</td>
-            <td>@Model.FullName</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@Model.Id">@Model.FullName</a>
+            </td>
             <td>@Model.Gender</td>
             <td>@Model.DateOfBirthString</td>
             <td>@Model.PhoneNumber</td>
             <td>@Model.BirthPlace</td>
             <td>@Model.IsGraduatedString</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@Model.Id"
+                    asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString"
+                    class="btn btn-sm btn-warning">Edit</a>
+            </td>
         </tr>
     </tbody>
 </table>

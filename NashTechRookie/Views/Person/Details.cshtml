@@ -1,0 +1,57 @@
+@model NashTechRookie.Models.Person
+
+@{
+    ViewData["Title"] = "Person Details";
+}
+
+<h1>Person Details</h1>
+
+@if (Model == null)
+{
+    <p>Person not found.</p>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            <h3>@Model.FullName</h3>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">ID</dt>
+                <dd class="col-sm-9">@Model.Id</dd>
+
+                <dt class="col-sm-3">First Name</dt>
+                <dd class="col-sm-9">@Model.FirstName</dd>
+
+                <dt class="col-sm-3">Last Name</dt>
+                <dd class="col-sm-9">@Model.LastName</dd>
+
+                <dt class="col-sm-3">Full Name</dt>
+                <dd class="col-sm-9">@Model.FullName</dd>
+
+                <dt class="col-sm-3">Gender</dt>
+                <dd class="col-sm-9">@Model.Gender</dd>
+
+                <dt class="col-sm-3">Date of Birth</dt>
+                <dd class="col-sm-9">@Model.DateOfBirthString</dd>
+
+                <dt class="col-sm-3">Phone Number</dt>
+                <dd class="col-sm-9">@Model.PhoneNumber</dd>
+
+                <dt class="col-sm-3">Birth Place</dt>
+                <dd class="col-sm-9">@Model.BirthPlace</dd>
+
+                <dt class="col-sm-3">Graduated</dt>
+                <dd class="col-sm-9">@Model.IsGraduatedString</dd>
+            </dl>
+        </div>
+        <div class="card-footer">
+            <form asp-action="Delete" asp-route-id="@Model.Id" method="post"
+                onsubmit="return confirm('Are you sure you want to delete @Model.FullName?');">
+                <input type="submit" value="Delete" class="btn btn-danger" />
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </form>
+        </div>
+    </div>
+}

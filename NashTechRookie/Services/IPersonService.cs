@@ -12,5 +12,7 @@ namespace NashTechRookie.Services
         FileModel ExportToExcel();
 
         int GetLastId();
+
+        Person? GetPersonById(int id);
     }
 }
