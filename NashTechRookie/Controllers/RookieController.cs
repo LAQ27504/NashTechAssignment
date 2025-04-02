@@ -70,7 +70,7 @@ public class PersonController : ControllerBase
         return _personService.GetPersonsByBirthYearWithAction("equal");
     }
 
-    [HttpPost("ExportToExcel")]
+    [HttpGet("ExportToExcel")]
     public IActionResult ExportToExcel()
     {
         var fileResponse = _personService.ExportToExcel();
