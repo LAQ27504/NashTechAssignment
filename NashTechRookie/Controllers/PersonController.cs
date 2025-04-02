@@ -13,6 +13,10 @@ namespace NashTechRookie.Controllers
             _personService = personService;
         }
 
+        public IActionResult Index()
+        {
+            return View();
+        }
         public IActionResult GetMales()
         {
             var males = _personService.GetMales();
