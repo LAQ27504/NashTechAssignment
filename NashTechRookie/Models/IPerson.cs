@@ -1,21 +1,15 @@
-namespace NashTechRookie
+
+namespace NashTechRookie.Models
 {
     public interface IPerson
     {
-        public int Id { get; set; }
-        public string? FirstName { get; }
-        public string? LastName { get; }
-        public string FullName => $"{LastName} {FirstName}";
-        public Gender Gender { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public string? PhoneNumber { get; set; }
-        public string? BirthPlace { get; set; }
-        public string IsGraduated { get; set; }
+        void Create(
+            Person person
+        );
 
-
-        void Create();
-
-        void Update();
+        void Update(
+            Person person
+        );
 
         void Delete(int id);
 

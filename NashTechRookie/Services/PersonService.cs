@@ -1,10 +1,11 @@
 using NashTechRookie.Data;
 using NashTechRookie.Utils;
 using NashTechRookie.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace NashTechRookie.Services
 {
-    public class PersonService : IPersonService
+    public class PersonService : IPersonService, IPerson
     {
         private readonly PersonData _personData = new();
 
@@ -52,6 +53,27 @@ namespace NashTechRookie.Services
             var fileName = $"Persons_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
 
             return new FileModel(fileContent, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+        }
+
+
+        public void Create(Person person)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Person person)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<IPerson> ListAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

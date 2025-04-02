@@ -1,3 +1,4 @@
+using NashTechRookie.Models;
 using Microsoft.AspNetCore.Mvc;
 using NashTechRookie.Services;
 
@@ -6,9 +7,11 @@ namespace NashTechRookie.Controllers
     public class PersonController : Controller
     {
         private readonly IPersonService _personService;
+        private readonly IPerson _person;
 
-        public PersonController(IPersonService personService)
+        public PersonController(IPersonService personService, IPerson person)
         {
+            //_person = person;
             _personService = personService;
         }
 
@@ -84,6 +87,32 @@ namespace NashTechRookie.Controllers
             var fileResponse = _personService.ExportToExcel();
 
             return File(fileResponse.FileContent, fileResponse.ContentType, fileResponse.FileName);
+        }
+
+        [HttpPost]
+        public IActionResult Create(Person person)
+        {
+
+            _person.Create(person);
+            // If validation fails, return to the form with the current data
+            return View(person);
+        }
+
+        public IActionResult Edit()
+        {
+            return View();
+        }
+
+        public IActionResult Delete()
+        {
+            return View();
+        }
+
+        public IActionResult ListAll()
+        {
+            var persons = _personService.GetAll();
+
+            return View(persons);
         }
     }
 }

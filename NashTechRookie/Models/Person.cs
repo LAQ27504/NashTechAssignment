@@ -12,7 +12,9 @@ namespace NashTechRookie.Models
         public DateTime DateOfBirth { get; set; }
         public string? PhoneNumber { get; set; }
         public string? BirthPlace { get; set; }
-        public string IsGraduated { get; set; }
+        public bool IsGraduated { get; set; }
+
+        public string IsGraduatedString => IsGraduated ? "Yes" : "No";
         public string DateOfBirthString => DateOfBirth.ToString("dd/MM/yyyy");
 
         public Person(
@@ -32,27 +34,7 @@ namespace NashTechRookie.Models
             DateOfBirth = dateOfBirth;
             PhoneNumber = phoneNumber;
             BirthPlace = birthPlace;
-            IsGraduated = isGraduated ? "Yes" : "No";
+            IsGraduated = isGraduated;
         }
-
-        // public void Create()
-        // {
-        //     throw new NotImplementedException();
-        // }
-
-        // public void Update()
-        // {
-        //     throw new NotImplementedException();
-        // }
-
-        // public void Delete()
-        // {
-        //     throw new NotImplementedException();
-        // }
-
-        // public List<IPerson> ListAll()
-        // {
-        //     throw new NotImplementedException();
-        // }
     }
 }
