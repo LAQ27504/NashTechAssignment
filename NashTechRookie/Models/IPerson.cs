@@ -11,7 +11,7 @@ namespace NashTechRookie.Models
             Person person
         );
 
-        void Delete(int id);
+        void Delete();
 
         List<IPerson> ListAll();
     }

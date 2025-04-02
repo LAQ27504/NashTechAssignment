@@ -92,9 +92,8 @@ namespace NashTechRookie.Controllers
         [HttpPost]
         public IActionResult Create(Person person)
         {
-
             _person.Create(person);
-            // If validation fails, return to the form with the current data
+
             return View(person);
         }
 

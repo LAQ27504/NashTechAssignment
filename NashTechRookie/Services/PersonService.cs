@@ -66,7 +66,7 @@ namespace NashTechRookie.Services
             throw new NotImplementedException();
         }
 
-        public void Delete(int id)
+        public void Delete()
         {
             throw new NotImplementedException();
         }
