@@ -59,5 +59,31 @@ namespace assignment.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return updateTask;
         }
+
+        public async Task<IEnumerable<TaskItem>> BulkAddTasks(IEnumerable<string> titles)
+        {
+            var tasks = new List<TaskItem>();
+            foreach (var title in titles)
+            {
+                var task = new TaskItem(title);
+                tasks.Add(task);
+            }
+
+            await _context.Tasks.AddRangeAsync(tasks);
+            await _context.SaveChangesAsync();
+            return tasks;
+        }
+
+        public Task<bool> BulkDeleteTasks(IEnumerable<Guid> ids)
+        {
+            var tasksToDelete = _context.Tasks.Where(t => ids.Contains(t.Id)).ToList();
+            if (tasksToDelete.Count != ids.Count())
+            {
+                return Task.FromResult(false);
+            }
+
+            _context.Tasks.RemoveRange(tasksToDelete);
+            return Task.FromResult(_context.SaveChanges() > 0);
+        }
     }
 }

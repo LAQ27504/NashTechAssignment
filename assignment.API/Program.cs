@@ -2,7 +2,9 @@ using assignment.Infrastructure.Gateway;
 using assignment.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using assignment.Infrastructure.Persistence;
-using assignment.Application.Task.Create;
+using assignment.Application.Task;
+using assignment.Application.Interface.Task;
+using assignment.Application.UseCase.Task;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +20,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     ));
 
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
-builder.Services.AddScoped<CreateTask>();
+builder.Services.AddScoped<ICreate, CreateTask>();
+builder.Services.AddScoped<IAddBulk, BulkAddTasks>();
+builder.Services.AddScoped<IDelete, DeleteTask>();
+builder.Services.AddScoped<IEdit, EditTask>();
+builder.Services.AddScoped<IGetById, GetTask>();
+builder.Services.AddScoped<IGetAll, ListAllTasks>();
+builder.Services.AddScoped<IDeleteBulk, BulkDeleteTasks>();
 
 var app = builder.Build();
 

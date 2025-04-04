@@ -1,4 +1,5 @@
-using assignment.Application.Task.Create;
+using assignment.Application.Interface.Task;
+using assignment.Application.Task;
 using assignment.Domain.Entities;
 
 using Microsoft.AspNetCore.Mvc;
@@ -9,18 +10,37 @@ namespace assignment.API.Controllers
     [Route("api/tasks")]
     public class TaskController : ControllerBase
     {
-        private readonly CreateTask _taskService;
+        private readonly ICreate _taskCreate;
+        private readonly IGetAll _taskGetAll;
+        private readonly IGetById _taskGetById;
+        private readonly IEdit _taskUpdate;
+        private readonly IDelete _taskDelete;
+        private readonly IAddBulk _addBulk;
+        private readonly IDeleteBulk _deleteBulk;
 
-        public TaskController(CreateTask taskService)
+        public TaskController(
+            ICreate taskCreate,
+            IGetAll taskGetAll,
+            IGetById taskGetById,
+            IEdit taskUpdate,
+            IDelete taskDelete,
+            IAddBulk addBulk,
+            IDeleteBulk deleteBulk)
         {
-            _taskService = taskService;
+            _taskCreate = taskCreate;
+            _taskGetAll = taskGetAll;
+            _taskGetById = taskGetById;
+            _taskUpdate = taskUpdate;
+            _taskDelete = taskDelete;
+            _addBulk = addBulk;
+            _deleteBulk = deleteBulk;
         }
 
         // Get all tasks
         [HttpGet]
         public async Task<IActionResult> GetAllTasks()
         {
-            var tasks = await _taskService.GetAllTasks();
+            var tasks = await _taskGetAll.Execute();
             return Ok(tasks);
         }
 
@@ -28,7 +48,7 @@ namespace assignment.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTaskById(Guid id)
         {
-            var task = await _taskService.GetTaskById(id);
+            var task = await _taskGetById.Execute(id);
             if (task == null)
                 return NotFound();
 
@@ -42,7 +62,7 @@ namespace assignment.API.Controllers
             if (task == null)
                 return BadRequest("Task cannot be null.");
 
-            var createdTask = await _taskService.Execute(task);
+            var createdTask = await _taskCreate.Execute(task);
             return CreatedAtAction(nameof(GetTaskById), new { id = createdTask.Id }, createdTask);
         }
 
@@ -53,7 +73,7 @@ namespace assignment.API.Controllers
             if (task == null)
                 return BadRequest("Task cannot be null.");
 
-            var updatedTask = await _taskService.UpdateTask(id, task);
+            var updatedTask = await _taskUpdate.Execute(id, task);
             if (updatedTask == null)
                 return NotFound();
 
@@ -64,7 +84,7 @@ namespace assignment.API.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTask(Guid id)
         {
-            var deleted = await _taskService.DeleteTask(id);
+            var deleted = await _taskDelete.Execute(id);
             if (!deleted)
                 return NotFound();
 

@@ -1,10 +1,10 @@
-using System.Runtime.CompilerServices;
+using assignment.Application.Interface.Task;
 using assignment.Domain.Entities;
 using assignment.Infrastructure.Gateway;
 
-namespace assignment.Application.Task.Create
+namespace assignment.Application.Task
 {
-    public class CreateTask
+    public class CreateTask : ICreate
     {
         private readonly ITaskRepository _taskRepository;
         public CreateTask(ITaskRepository taskRepository)
@@ -25,26 +25,6 @@ namespace assignment.Application.Task.Create
             var taskItem = new TaskItem(title);
 
             return await _taskRepository.CreateTask(taskItem);
-        }
-
-        public async Task<bool> DeleteTask(Guid id)
-        {
-            return await _taskRepository.DeleteTask(id);
-        }
-
-        public async Task<IEnumerable<TaskItem>> GetAllTasks()
-        {
-            return await _taskRepository.GetAllTask();
-        }
-
-        public async Task<TaskItem?> GetTaskById(Guid id)
-        {
-            return await _taskRepository.GetTaskById(id);
-        }
-
-        public async Task<TaskItem?> UpdateTask(Guid id, TaskItem task)
-        {
-            return await _taskRepository.UpdateTask(id, task);
         }
     }
 }
