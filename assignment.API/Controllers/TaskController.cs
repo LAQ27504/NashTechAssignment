@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace assignment.API.Controllers
 {
     [ApiController]
-    [Route("api/tasks")]
+    [Route("api/[controller]/[action]")]
     public class TaskController : ControllerBase
     {
         private readonly ICreate _taskCreate;
@@ -57,12 +57,10 @@ namespace assignment.API.Controllers
 
         // Create a new task
         [HttpPost]
-        public async Task<IActionResult> CreateTask([FromBody] string task)
+        public async Task<IActionResult> CreateTask([FromBody] string title)
         {
-            if (task == null)
-                return BadRequest("Task cannot be null.");
 
-            var createdTask = await _taskCreate.Execute(task);
+            var createdTask = await _taskCreate.Execute(title);
             return CreatedAtAction(nameof(GetTaskById), new { id = createdTask.Id }, createdTask);
         }
 
@@ -70,9 +68,6 @@ namespace assignment.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateTask(Guid id, [FromBody] TaskItem task)
         {
-            if (task == null)
-                return BadRequest("Task cannot be null.");
-
             var updatedTask = await _taskUpdate.Execute(id, task);
             if (updatedTask == null)
                 return NotFound();
@@ -85,6 +80,23 @@ namespace assignment.API.Controllers
         public async Task<IActionResult> DeleteTask(Guid id)
         {
             var deleted = await _taskDelete.Execute(id);
+            if (!deleted)
+                return NotFound();
+
+            return NoContent();
+        }
+
+        [HttpPost("bulk")]
+        public async Task<IActionResult> BulkAddTasks([FromBody] List<string> titles)
+        {
+            var createdTasks = await _addBulk.Execute(titles);
+            return CreatedAtAction(nameof(GetAllTasks), createdTasks);
+        }
+
+        [HttpDelete("bulk")]
+        public async Task<IActionResult> BulkDeleteTasks([FromBody] List<Guid> ids)
+        {
+            var deleted = await _deleteBulk.Execute(ids);
             if (!deleted)
                 return NotFound();
 
