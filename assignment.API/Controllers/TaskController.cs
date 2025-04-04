@@ -1,49 +1,74 @@
-using Microsoft.AspNetCore.Mvc;
+using assignment.Application.Task.Create;
 using assignment.Domain.Entities;
-using assignment.Infrastructure.Gateway;
+
+using Microsoft.AspNetCore.Mvc;
 
 namespace assignment.API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]/[action]")]
-    public class TasksController : ControllerBase
+    [Route("api/tasks")]
+    public class TaskController : ControllerBase
     {
-        private readonly ITaskRepository _repo;
+        private readonly CreateTask _taskService;
 
-        public TasksController(ITaskRepository repo)
+        public TaskController(CreateTask taskService)
         {
-            _repo = repo;
+            _taskService = taskService;
         }
 
+        // Get all tasks
         [HttpGet]
-        public async Task<IActionResult> GetAll() => Ok(await _repo.GetAllTask());
+        public async Task<IActionResult> GetAllTasks()
+        {
+            var tasks = await _taskService.GetAllTasks();
+            return Ok(tasks);
+        }
 
+        // Get a task by ID
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> GetTaskById(Guid id)
         {
-            var task = await _repo.GetTaskById(id);
-            return task == null ? NotFound() : Ok(task);
+            var task = await _taskService.GetTaskById(id);
+            if (task == null)
+                return NotFound();
+
+            return Ok(task);
         }
 
+        // Create a new task
         [HttpPost]
-        public async Task<IActionResult> Create(TaskItem task)
+        public async Task<IActionResult> CreateTask([FromBody] string task)
         {
-            var created = await _repo.CreateTask(task);
-            return CreatedAtAction(nameof(Get), new { id = created.Id }, created);
+            if (task == null)
+                return BadRequest("Task cannot be null.");
+
+            var createdTask = await _taskService.Execute(task);
+            return CreatedAtAction(nameof(GetTaskById), new { id = createdTask.Id }, createdTask);
         }
 
+        // Update a task
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, TaskItem task)
+        public async Task<IActionResult> UpdateTask(Guid id, [FromBody] TaskItem task)
         {
-            var updated = await _repo.UpdateTask(id, task);
-            return updated == null ? NotFound() : Ok(updated);
+            if (task == null)
+                return BadRequest("Task cannot be null.");
+
+            var updatedTask = await _taskService.UpdateTask(id, task);
+            if (updatedTask == null)
+                return NotFound();
+
+            return Ok(updatedTask);
         }
 
+        // Delete a task
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> DeleteTask(Guid id)
         {
-            var result = await _repo.DeleteTask(id);
-            return result ? NoContent() : NotFound();
+            var deleted = await _taskService.DeleteTask(id);
+            if (!deleted)
+                return NotFound();
+
+            return NoContent();
         }
     }
 }

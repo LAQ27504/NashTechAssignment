@@ -1,15 +1,16 @@
-using Microsoft.EntityFrameworkCore;
 using assignment.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
-namespace TaskManager.Infrastructure.Persistence
+namespace assignment.Infrastructure.Persistence;
+public class ApplicationDbContext : DbContext
 {
-    public class ApplicationDbContext : DbContext
-    {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-        public DbSet<TaskItem> Tasks => Set<TaskItem>();
+    public DbSet<TaskItem> Tasks { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // Example: Configure TaskItem entity
+        modelBuilder.Entity<TaskItem>().HasKey(t => t.Id);
     }
 }

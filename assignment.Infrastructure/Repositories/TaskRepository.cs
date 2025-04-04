@@ -1,7 +1,7 @@
 using assignment.Domain.Entities;
 using assignment.Infrastructure.Gateway;
 using Microsoft.EntityFrameworkCore;
-using TaskManager.Infrastructure.Persistence;
+using assignment.Infrastructure.Persistence;
 
 namespace assignment.Infrastructure.Repositories
 {

@@ -9,7 +9,7 @@ namespace assignment.Domain.Entities
         [Required]
         [MaxLength(100)]
         [MinLength(3)]
-        public required string Title { get; set; }
+        public string Title { get; set; }
         public bool IsCompleted { get; set; }
 
         public TaskItem(string title)
