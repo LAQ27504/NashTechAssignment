@@ -5,6 +5,7 @@ using assignment.Infrastructure.Persistence;
 using assignment.Application.Task;
 using assignment.Application.Interface.Task;
 using assignment.Application.UseCase.Task;
+using assignment.Infrastructure.Persistence.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,9 +15,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseMySql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")
     ));
 
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
@@ -36,6 +36,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    DummyData.Initialize(services); // This needs DbContext to work
+}
+
 
 app.UseHttpsRedirection();
 app.UseAuthorization();

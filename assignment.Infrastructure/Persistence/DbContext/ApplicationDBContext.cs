@@ -6,11 +6,11 @@ public class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-    public DbSet<TaskItem> Tasks { get; set; }
+    public DbSet<Person> Persons { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Example: Configure TaskItem entity
-        modelBuilder.Entity<TaskItem>().HasKey(t => t.Id);
+        modelBuilder.Entity<Person>().HasKey(t => t.Id);
     }
 }

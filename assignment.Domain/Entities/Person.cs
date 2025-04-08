@@ -15,7 +15,11 @@ namespace assignment.Domain.Entities
         [MaxLength(100)]
         [MinLength(3)]
         public string LastName { get; set; }
+
+        public string Name => $"{FirstName} {LastName}";
+
         public DateTime DateOfBirth { get; set; }
+
         public HumanGender Gender { get; set; }
 
         [Required]
@@ -42,9 +46,3 @@ namespace assignment.Domain.Entities
     }
 }
 
-public enum HumanGender
-{
-    Male,
-    Female,
-    Other
-}
