@@ -13,6 +13,13 @@ namespace assignment.Infrastructure.Persistence.DBContext.Configuration
             builder.Property(d => d.Name)
                 .IsRequired()
                 .HasMaxLength(100);
+
+            builder.HasData(
+                new Department { Id = 1, Name = "Software Development" },
+                new Department { Id = 2, Name = "Finance" },
+                new Department { Id = 3, Name = "Accountant" },
+                new Department { Id = 4, Name = "HR" }
+            );
         }
     }
 }

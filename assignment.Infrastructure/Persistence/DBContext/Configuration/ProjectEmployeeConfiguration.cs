@@ -8,13 +8,23 @@ namespace assignment.Infrastructure.Persistence.DBContext.Configuration
     {
         public void Configure(EntityTypeBuilder<ProjectEmployee> builder)
         {
-            builder.HasKey(pe => pe.ProjectId);
+            builder.HasKey(sc => new { sc.ProjectId, sc.EmployeeId });
 
             builder.Property(pe => pe.Enable)
                    .IsRequired();
 
             builder.Property(pe => pe.EmployeeId)
                    .IsRequired();
+
+            builder.HasOne(pe => pe.Project)
+                    .WithMany(p => p.ProjectEmployees)
+                    .HasForeignKey(pe => pe.ProjectId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(pe => pe.Employee)
+                    .WithMany(e => e.ProjectEmployees)
+                    .HasForeignKey(pe => pe.EmployeeId)
+                    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

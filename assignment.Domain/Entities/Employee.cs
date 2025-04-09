@@ -16,7 +16,7 @@ namespace assignment.Domain.Entities
 
         public Salaries Salary { get; set; }
 
-        public ICollection<Project> Projects { get; set; }
+        public ICollection<ProjectEmployee> ProjectEmployees { get; set; }
 
     }
 }
