@@ -1,11 +1,5 @@
-using assignment.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using assignment.Infrastructure.Persistence.DBContext;
-using assignment.Application.Services.Persons;
-using assignment.Application.Interface.Persons;
-using assignment.Infrastructure.Persistence.Seed;
-using assignment.Application.Interface.Gateway;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -18,13 +12,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")
     ));
 
-builder.Services.AddScoped<IPersonRepository, PersonRepository>();
-builder.Services.AddScoped<DummyData>();
-builder.Services.AddScoped<ICreate, CreatePerson>();
-builder.Services.AddScoped<IListPerson, ListPerson>();
-builder.Services.AddScoped<IUpdate, UpdatePerson>();
-builder.Services.AddScoped<IDelete, DeletePerson>();
-builder.Services.AddScoped<IFilter, FilterPerson>();
 
 var app = builder.Build();
 
@@ -38,11 +25,6 @@ if (app.Environment.IsDevelopment())
 using (var scope = app.Services.CreateScope())
 {
     var Servicess = scope.ServiceProvider; // This needs DbContext to work
-
-
-
-    var dummyData = Servicess.GetRequiredService<DummyData>();
-    await dummyData.Initialize();
 }
 
 
@@ -50,3 +32,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
+
+
