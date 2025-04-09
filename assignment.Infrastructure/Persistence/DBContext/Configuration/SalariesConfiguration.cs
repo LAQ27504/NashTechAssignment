@@ -18,6 +18,13 @@ namespace assignment.Infrastructure.Persistence.DBContext.Configuration
                 .WithOne(e => e.Salary)
                 .HasForeignKey<Salaries>(s => s.EmployeeId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasData(
+                new Salaries { Id = 1, Salary = 5000, EmployeeId = 1 },
+                new Salaries { Id = 2, Salary = 5500, EmployeeId = 2 },
+                new Salaries { Id = 3, Salary = 6000, EmployeeId = 3 }
+            );
+
         }
     }
 }

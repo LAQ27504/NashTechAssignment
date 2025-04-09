@@ -12,7 +12,7 @@ using assignment.Infrastructure.Persistence.DBContext;
 namespace assignment.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250409144505_InitialCreate")]
+    [Migration("20250409145858_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -89,6 +89,29 @@ namespace assignment.Infrastructure.Migrations
                     b.HasIndex("DepartmentId");
 
                     b.ToTable("Employees");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DepartmentId = 1,
+                            JoinedDate = new DateTime(2023, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Alice"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DepartmentId = 2,
+                            JoinedDate = new DateTime(2023, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Bob"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DepartmentId = 3,
+                            JoinedDate = new DateTime(2023, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Charlie"
+                        });
                 });
 
             modelBuilder.Entity("assignment.Domain.Entities.Project", b =>
@@ -107,6 +130,18 @@ namespace assignment.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Projects");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Assignment 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Assignment B"
+                        });
                 });
 
             modelBuilder.Entity("assignment.Domain.Entities.ProjectEmployee", b =>
@@ -125,6 +160,26 @@ namespace assignment.Infrastructure.Migrations
                     b.HasIndex("EmployeeId");
 
                     b.ToTable("ProjectEmployees");
+
+                    b.HasData(
+                        new
+                        {
+                            ProjectId = 1,
+                            EmployeeId = 1,
+                            Enable = true
+                        },
+                        new
+                        {
+                            ProjectId = 1,
+                            EmployeeId = 2,
+                            Enable = true
+                        },
+                        new
+                        {
+                            ProjectId = 2,
+                            EmployeeId = 2,
+                            Enable = true
+                        });
                 });
 
             modelBuilder.Entity("assignment.Domain.Entities.Salaries", b =>
@@ -147,6 +202,26 @@ namespace assignment.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Salaries");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EmployeeId = 1,
+                            Salary = 5000
+                        },
+                        new
+                        {
+                            Id = 2,
+                            EmployeeId = 2,
+                            Salary = 5500
+                        },
+                        new
+                        {
+                            Id = 3,
+                            EmployeeId = 3,
+                            Salary = 6000
+                        });
                 });
 
             modelBuilder.Entity("assignment.Domain.Entities.Employee", b =>

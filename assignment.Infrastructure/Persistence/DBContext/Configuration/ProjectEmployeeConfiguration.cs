@@ -25,6 +25,12 @@ namespace assignment.Infrastructure.Persistence.DBContext.Configuration
                     .WithMany(e => e.ProjectEmployees)
                     .HasForeignKey(pe => pe.EmployeeId)
                     .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasData(
+                new ProjectEmployee { ProjectId = 1, EmployeeId = 1, Enable = true },
+                new ProjectEmployee { ProjectId = 1, EmployeeId = 2, Enable = true },
+                new ProjectEmployee { ProjectId = 2, EmployeeId = 2, Enable = true }
+            );
         }
     }
 }

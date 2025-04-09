@@ -116,6 +116,45 @@ namespace assignment.Infrastructure.Migrations
                     { 4, "HR" }
                 });
 
+            migrationBuilder.InsertData(
+                table: "Projects",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Assignment 1" },
+                    { 2, "Assignment B" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Employees",
+                columns: new[] { "Id", "DepartmentId", "JoinedDate", "Name" },
+                values: new object[,]
+                {
+                    { 1, 1, new DateTime(2023, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Alice" },
+                    { 2, 2, new DateTime(2023, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Bob" },
+                    { 3, 3, new DateTime(2023, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "Charlie" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ProjectEmployees",
+                columns: new[] { "EmployeeId", "ProjectId", "Enable" },
+                values: new object[,]
+                {
+                    { 1, 1, true },
+                    { 2, 1, true },
+                    { 2, 2, true }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Salaries",
+                columns: new[] { "Id", "EmployeeId", "Salary" },
+                values: new object[,]
+                {
+                    { 1, 1, 5000 },
+                    { 2, 2, 5500 },
+                    { 3, 3, 6000 }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_DepartmentId",
                 table: "Employees",

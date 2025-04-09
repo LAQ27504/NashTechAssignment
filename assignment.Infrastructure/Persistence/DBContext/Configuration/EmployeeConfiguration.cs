@@ -22,6 +22,12 @@ namespace assignment.Infrastructure.Persistence.DBContext.Configuration
                 .HasForeignKey(e => e.DepartmentId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.HasData(
+                new Employee { Id = 1, Name = "Alice", JoinedDate = new DateTime(2023, 1, 10), DepartmentId = 1 },
+                new Employee { Id = 2, Name = "Bob", JoinedDate = new DateTime(2023, 2, 15), DepartmentId = 2 },
+                new Employee { Id = 3, Name = "Charlie", JoinedDate = new DateTime(2023, 3, 20), DepartmentId = 3 }
+            );
+
         }
     }
 }

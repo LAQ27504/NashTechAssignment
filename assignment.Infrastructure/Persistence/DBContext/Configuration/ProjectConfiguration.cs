@@ -14,6 +14,11 @@ namespace assignment.Infrastructure.Persistence.DBContext.Configuration
                 .IsRequired()
                 .HasMaxLength(100);
 
+            builder.HasData(
+                new Project { Id = 1, Name = "Assignment 1" },
+                new Project { Id = 2, Name = "Assignment B" }
+            );
+
         }
     }
 }
