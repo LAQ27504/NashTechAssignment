@@ -1,21 +1,21 @@
-namespace assignment.Application.UseCase.Task
+namespace assignment.Application.Service.Task
 {
     using assignment.Application.Interface.Task;
     using assignment.Domain.Entities;
     using assignment.Infrastructure.Gateway;
 
-    public class ListAllTasks : IGetAll
+    public class GetTask : IGetById
     {
         private readonly ITaskRepository _taskRepository;
 
-        public ListAllTasks(ITaskRepository taskRepository)
+        public GetTask(ITaskRepository taskRepository)
         {
             _taskRepository = taskRepository;
         }
 
-        public async Task<IEnumerable<TaskItem>> Execute()
+        public async Task<TaskItem?> Execute(Guid id)
         {
-            return await _taskRepository.GetAllTask();
+            return await _taskRepository.GetTaskById(id);
         }
     }
 }

@@ -1,21 +1,21 @@
-namespace assignment.Application.UseCase.Task
+namespace assignment.Application.Service.Task
 {
     using assignment.Application.Interface.Task;
     using assignment.Domain.Entities;
     using assignment.Infrastructure.Gateway;
 
-    public class DeleteTask : IDelete
+    public class BulkDeleteTasks : IDeleteBulk
     {
         private readonly ITaskRepository _taskRepository;
 
-        public DeleteTask(ITaskRepository taskRepository)
+        public BulkDeleteTasks(ITaskRepository taskRepository)
         {
             _taskRepository = taskRepository;
         }
 
-        public async Task<bool> Execute(Guid id)
+        public async Task<bool> Execute(IEnumerable<Guid> ids)
         {
-            return await _taskRepository.DeleteTask(id);
+            return await _taskRepository.BulkDeleteTasks(ids);
         }
     }
 }

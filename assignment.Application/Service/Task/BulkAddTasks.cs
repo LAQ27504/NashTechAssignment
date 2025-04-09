@@ -1,4 +1,4 @@
-namespace assignment.Application.UseCase.Task
+namespace assignment.Application.Service.Task
 {
     using System;
     using System.Collections.Generic;

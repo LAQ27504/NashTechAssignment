@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using assignment.Infrastructure.Persistence;
 using assignment.Application.Task;
 using assignment.Application.Interface.Task;
-using assignment.Application.UseCase.Task;
+using assignment.Application.Service.Task;
 using assignment.Infrastructure.Persistence.Seed;
 
 var builder = WebApplication.CreateBuilder(args);

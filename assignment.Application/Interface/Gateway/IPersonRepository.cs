@@ -7,9 +7,13 @@ namespace assignment.Application.Interface.Gateway
     public interface IPersonRepository
     {
         Task<Person> CreatePerson(Person person);
-        Task<bool> UpdatePerson(Person person);
+
+        Task<Person> UpdatePerson(Person person);
+
         Task<bool> DeletePerson(Guid id);
 
-        Task<Person> FilterData(string name, HumanGender gender, string birthPlace);
+        Task<List<Person>> FilterData(string? name, HumanGender? gender, string? birthPlace);
+
+        Task<IEnumerable<Person>> GetAllPerson();
     }
 }

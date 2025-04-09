@@ -1,4 +1,4 @@
-namespace assignment.Application.UseCase.Task
+namespace assignment.Application.Service.Task
 {
     using assignment.Application.Interface.Task;
     using assignment.Domain.Entities;
