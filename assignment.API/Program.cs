@@ -1,7 +1,7 @@
 using assignment.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using assignment.Infrastructure.Persistence.DBContext;
-using assignment.Application.Service.Persons;
+using assignment.Application.Services.Persons;
 using assignment.Application.Interface.Persons;
 using assignment.Infrastructure.Persistence.Seed;
 using assignment.Application.Interface.Gateway;
@@ -9,7 +9,7 @@ using assignment.Application.Interface.Gateway;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-// Add services to the container.
+// Add Servicess to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -37,11 +37,11 @@ if (app.Environment.IsDevelopment())
 
 using (var scope = app.Services.CreateScope())
 {
-    var services = scope.ServiceProvider; // This needs DbContext to work
+    var Servicess = scope.ServiceProvider; // This needs DbContext to work
 
 
 
-    var dummyData = services.GetRequiredService<DummyData>();
+    var dummyData = Servicess.GetRequiredService<DummyData>();
     await dummyData.Initialize();
 }
 

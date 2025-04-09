@@ -1,5 +1,6 @@
+using assignment.Application.DTOs;
 using assignment.Application.Interface.Persons;
-using assignment.Application.Service.Persons;
+using assignment.Application.Services.Persons;
 using assignment.Domain.Entities;
 using assignment.Infrastructure.Persistence.Seed;
 using Microsoft.AspNetCore.Mvc;
@@ -42,14 +43,14 @@ namespace assignment.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePerson([FromBody] Person person)
+        public async Task<IActionResult> CreatePerson([FromBody] PersonConfigRequest person)
         {
             var createdPerson = await _personCreate.Execute(person);
             return Ok(createdPerson);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePerson(Guid id, [FromBody] Person person)
+        public async Task<IActionResult> UpdatePerson(Guid id, [FromBody] PersonConfigRequest person)
         {
             var updatePerson = await _personUpdate.Execute(id, person);
             return Ok(updatePerson);
