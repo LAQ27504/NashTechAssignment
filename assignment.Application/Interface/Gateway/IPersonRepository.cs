@@ -8,7 +8,7 @@ namespace assignment.Application.Interface.Gateway
     {
         Task<Person> CreatePerson(Person person);
 
-        Task<Person> UpdatePerson(Person person);
+        Task<Person> UpdatePerson(Guid id, Person person);
 
         Task<bool> DeletePerson(Guid id);
 

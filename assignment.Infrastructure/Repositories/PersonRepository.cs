@@ -1,6 +1,6 @@
 using assignment.Application.Interface.Gateway;
 using assignment.Domain.Entities;
-using assignment.Infrastructure.Persistence;
+using assignment.Infrastructure.Persistence.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
@@ -40,11 +40,11 @@ namespace assignment.Infrastructure.Repositories
 
         public async Task<List<Person>> FilterData(string? name, HumanGender? gender, string? birthPlace)
         {
-            IQueryable<Person> query = _context.Persons.AsQueryable();
+            IQueryable<Person> query = _context.Persons.AsQueryable<Person>();
 
             if (!string.IsNullOrEmpty(name))
             {
-                query = query.Where(p => p.Name.Contains(name));
+                query = query.Where(p => (p.FirstName + " " + p.LastName).Contains(name));
             }
 
             if (gender.HasValue)
@@ -59,9 +59,9 @@ namespace assignment.Infrastructure.Repositories
             return await query.ToListAsync();
         }
 
-        public async Task<Person> UpdatePerson(Person person)
+        public async Task<Person> UpdatePerson(Guid id, Person person)
         {
-            Person updatePerson = await _context.Persons.FindAsync(person.Id) ?? throw new Exception("Person not found");
+            Person updatePerson = await _context.Persons.FindAsync(id) ?? throw new Exception("Person not found");
             updatePerson = person;
             await _context.SaveChangesAsync();
             return updatePerson;

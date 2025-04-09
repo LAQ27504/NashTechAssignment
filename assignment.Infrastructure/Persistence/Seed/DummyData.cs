@@ -1,24 +1,24 @@
+
 using assignment.Domain.Entities;
-using assignment.Infrastructure.Persistence;
+using assignment.Infrastructure.Persistence.DBContext;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace assignment.Infrastructure.Persistence.Seed
 {
-    public static class DummyData
+    public class DummyData
     {
-        public static void Initialize(IServiceProvider serviceProvider)
-        {
-            using (var context = new ApplicationDbContext(
-                serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>()))
-            {
-                // Check if data already exists
-                if (context.Persons.Any())
-                {
-                    return; // DB has been seeded
-                }
+        private readonly ApplicationDbContext _context;
 
-                context.Persons.AddRange(
+        public DummyData(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task Initialize()
+        {
+            if (await _context.Persons.AnyAsync()) return;
+
+            await _context.Persons.AddRangeAsync(
                 new Person("John", "Doe", new DateTime(1992, 5, 15), HumanGender.Male, "New York"),
                 new Person("Jane", "Smith", new DateTime(1988, 7, 22), HumanGender.Female, "Los Angeles"),
                 new Person("Sam", "Lee", new DateTime(2004, 3, 10), HumanGender.Other, "Chicago"),
@@ -26,8 +26,8 @@ namespace assignment.Infrastructure.Persistence.Seed
                 new Person("Mike", "Johnson", new DateTime(1996, 1, 30), HumanGender.Male, "Phoenix")
             );
 
-                context.SaveChanges();
-            }
+            await _context.SaveChangesAsync();
+
         }
     }
 

@@ -1,8 +1,10 @@
+using assignment.Application.DTOs;
 using assignment.Application.Interface.Gateway;
 using assignment.Application.Interface.Persons;
+using assignment.Application.Mapper;
 using assignment.Domain.Entities;
 
-namespace assignment.Application.Service.Persons
+namespace assignment.Application.Services.Persons
 {
     public class CreatePerson : ICreate
     {
@@ -13,10 +15,10 @@ namespace assignment.Application.Service.Persons
             _personRepository = personRepository;
         }
 
-        public async Task<Person> Execute(Person person)
+        public async Task<Person> Execute(PersonConfigRequest person)
         {
             // Create a new person
-            Person newPerson = person;
+            Person newPerson = ToPersonEntity.ToEntity(person);
 
             return await _personRepository.CreatePerson(newPerson);
         }

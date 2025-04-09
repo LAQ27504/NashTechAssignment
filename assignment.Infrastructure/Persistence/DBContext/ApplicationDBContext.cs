@@ -1,7 +1,7 @@
 using assignment.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace assignment.Infrastructure.Persistence;
+namespace assignment.Infrastructure.Persistence.DBContext;
 public class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
