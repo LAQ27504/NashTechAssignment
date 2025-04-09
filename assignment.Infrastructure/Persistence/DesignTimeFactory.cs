@@ -13,7 +13,7 @@ namespace MyProject.Infrastructure.Persistence
 
             // Here you can specify your connection string directly, or read it from configuration if you like.
             // Make sure to include the necessary package for your provider (e.g., Microsoft.EntityFrameworkCore.SqlServer)
-            optionsBuilder.UseSqlServer("Server=localhost;Database=PersonDb;User Id=sa;Password=SQLServer1@;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=CompanyDb;User Id=sa;Password=SQLServer1@;TrustServerCertificate=True;");
 
             // Return a new instance of your DbContext.
             return new ApplicationDbContext(optionsBuilder.Options);
