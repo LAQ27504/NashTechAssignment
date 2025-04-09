@@ -1,11 +1,10 @@
-using assignment.Infrastructure.Gateway;
 using assignment.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
-using assignment.Infrastructure.Persistence;
-using assignment.Application.Task;
-using assignment.Application.Interface.Task;
-using assignment.Application.Service.Task;
+using assignment.Infrastructure.Persistence.DBContext;
+using assignment.Application.Service.Persons;
+using assignment.Application.Interface.Persons;
 using assignment.Infrastructure.Persistence.Seed;
+using assignment.Application.Interface.Gateway;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,14 +18,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")
     ));
 
-builder.Services.AddScoped<ITaskRepository, TaskRepository>();
-builder.Services.AddScoped<ICreate, CreateTask>();
-builder.Services.AddScoped<IAddBulk, BulkAddTasks>();
-builder.Services.AddScoped<IDelete, DeleteTask>();
-builder.Services.AddScoped<IEdit, EditTask>();
-builder.Services.AddScoped<IGetById, GetTask>();
-builder.Services.AddScoped<IGetAll, ListAllTasks>();
-builder.Services.AddScoped<IDeleteBulk, BulkDeleteTasks>();
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+builder.Services.AddScoped<DummyData>();
+builder.Services.AddScoped<ICreate, CreatePerson>();
+builder.Services.AddScoped<IListPerson, ListPerson>();
+builder.Services.AddScoped<IUpdate, UpdatePerson>();
+builder.Services.AddScoped<IDelete, DeletePerson>();
+builder.Services.AddScoped<IFilter, FilterPerson>();
 
 var app = builder.Build();
 
@@ -39,8 +37,12 @@ if (app.Environment.IsDevelopment())
 
 using (var scope = app.Services.CreateScope())
 {
-    var services = scope.ServiceProvider;
-    DummyData.Initialize(services); // This needs DbContext to work
+    var services = scope.ServiceProvider; // This needs DbContext to work
+
+
+
+    var dummyData = services.GetRequiredService<DummyData>();
+    await dummyData.Initialize();
 }
 
 
