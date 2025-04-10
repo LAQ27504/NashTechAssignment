@@ -7,6 +7,6 @@ namespace assignment.Application.Interface.UseCase
         Task<Project> UpdateProjectAsync(Project project);
         Task<bool> DeleteProjectAsync(int id);
         Task<Project> GetProjectByIdAsync(int id);
-        Task<IEnumerable<Project>> GetAllProjectsAsync();
+        Task<List<Project>> GetAllProjectsAsync();
     }
 }

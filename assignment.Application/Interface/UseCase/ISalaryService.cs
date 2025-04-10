@@ -7,6 +7,6 @@ namespace assignment.Application.Interface.UseCase
         Task<Salaries> UpdateSalaryAsync(Salaries salary);
         Task<bool> DeleteSalaryAsync(int id);
         Task<Salaries> GetSalaryByIdAsync(int id);
-        Task<IEnumerable<Salaries>> GetAllSalariesAsync();
+        Task<List<Salaries>> GetAllSalariesAsync();
     }
 }
