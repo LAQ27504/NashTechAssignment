@@ -8,6 +8,6 @@ namespace assignment.Domain.Entities
 
         public int Salary { get; set; }
 
-        public Employee Employee { get; set; }
+        public Employee? Employee { get; set; }
     }
 }

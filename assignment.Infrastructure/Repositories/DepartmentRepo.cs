@@ -1,11 +1,11 @@
+using System.Collections.Generic;
+using assignment.Application.Interface.Gateway;
+using assignment.Domain.Entities;
+using assignment.Infrastructure.Persistence.DBContext;
+using Microsoft.EntityFrameworkCore;
+
 namespace assignment.Infrastructure.Repositories
 {
-    using System.Collections.Generic;
-    using assignment.Application.Interface.Gateway;
-    using assignment.Domain.Entities;
-    using assignment.Infrastructure.Persistence.DBContext;
-    using Microsoft.EntityFrameworkCore;
-
     public class DepartmentRepo : IDepartmentRepo
     {
         private readonly ApplicationDbContext _context;
@@ -24,29 +24,38 @@ namespace assignment.Infrastructure.Repositories
 
         public Task<bool> DeleteDepartmentAsync(int id)
         {
-            throw new NotImplementedException();
+            var department = _context.Departments.Find(id);
+            if (department != null)
+            {
+                _context.Departments.Remove(department);
+                _context.SaveChangesAsync();
+                return Task.FromResult(true);
+            }
+            return Task.FromResult(false);
         }
 
-        public Task<IEnumerable<Department>> GetAllDepartmentsAsync()
+        public Task<List<Department>> GetAllDepartmentsAsync()
         {
-            throw new NotImplementedException();
+            return _context.Departments
+                .ToListAsync();
         }
 
-        public async Task<Department?> GetDepartmentById(int id)
+        public async Task<Department?> GetDepartmentByIdAsync(int id)
         {
             return await _context.Departments
-                .Include(d => d.Employees)
                 .FirstOrDefaultAsync(d => d.Id == id);
         }
 
-        public Task<Department?> GetDepartmentByIdAsync(int id)
+        public async Task<Department> UpdateDepartmentAsync(Department department)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<Department> UpdateDepartmentAsync(Department department)
-        {
-            throw new NotImplementedException();
+            var updateDepartment = await _context.Departments.FindAsync(department.Id);
+            if (updateDepartment == null)
+            {
+                throw new Exception("Department not found");
+            }
+            updateDepartment = department;
+            await _context.SaveChangesAsync();
+            return updateDepartment;
         }
     }
 }

@@ -1,17 +1,15 @@
-using assignment.Domain.Entities;
-
-namespace assignment.Application.Interface.Gateway
+namespace assignment.Application.Interface.UseCase
 {
-    public interface IDepartmentRepo
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using assignment.Domain.Entities;
+
+    public interface IDepartmentService
     {
         Task<List<Department>> GetAllDepartmentsAsync();
-
         Task<Department?> GetDepartmentByIdAsync(int id);
-
         Task<Department> AddDepartmentAsync(Department department);
-
         Task<Department> UpdateDepartmentAsync(Department department);
-
         Task<bool> DeleteDepartmentAsync(int id);
     }
 }
