@@ -1,3 +1,4 @@
+using assignment.Application.DTOs.Response;
 using assignment.Domain.Entities;
 
 namespace assignment.Application.Interface.Gateway
@@ -12,6 +13,6 @@ namespace assignment.Application.Interface.Gateway
 
         Task<List<EmployeeWithDepartmentDTO>> GetAllEmployeeAndDepartmentAsync();
         Task<List<EmployeeWithProjectDTO>> GetAllEmployeeAndProjectAsync();
-        Task<List<Employee>> GetHighSalaryEmployeesAsync();
+        Task<List<EmployeeHighSalaryJoinDate>> GetHighSalaryEmployeesAsync();
     }
 }

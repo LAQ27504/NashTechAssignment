@@ -1,5 +1,6 @@
 namespace assignment.Application.Interface.UseCase
 {
+    using assignment.Application.DTOs.Response;
     using assignment.Domain.Entities;
     public interface IEmployeeService
     {
@@ -10,6 +11,6 @@ namespace assignment.Application.Interface.UseCase
         Task<List<Employee>> GetAllEmployeesAsync();
         Task<List<EmployeeWithDepartmentDTO>> GetAllEmployeeAndDepartmentAsync();
         Task<List<EmployeeWithProjectDTO>> GetAllEmployeeAndProjects();
-        Task<List<Employee>> GetHighSalaryEmployeesAsync();
+        Task<List<EmployeeHighSalaryJoinDate>> GetHighSalaryEmployeesAsync();
     }
 }

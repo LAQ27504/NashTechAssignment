@@ -17,5 +17,10 @@ namespace assignment.Application.Services
         {
             return await _projectEmployeeRepo.GetProjectEmployeeByProjectID(id);
         }
+
+        public async Task<List<ProjectEmployee>> GetAllProjectEmployeesAsync()
+        {
+            return await _projectEmployeeRepo.GetAllProjectEmployees();
+        }
     }
 }

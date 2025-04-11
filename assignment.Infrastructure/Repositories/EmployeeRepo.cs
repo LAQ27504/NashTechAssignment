@@ -2,6 +2,7 @@ namespace assignment.Infrastructure.Repositories
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using assignment.Application.DTOs.Response;
     using assignment.Application.Interface.Gateway;
     using assignment.Domain.Entities;
     using assignment.Infrastructure.Persistence.DBContext;
@@ -87,7 +88,7 @@ namespace assignment.Infrastructure.Repositories
                                                     FROM 
                                                         [dbo].[Employees] [e]
                                                     LEFT JOIN 
-                                                        [dbo].[ProjectEmployee] [pe] 
+                                                        [dbo].[ProjectEmployees] [pe] 
                                                     ON
                                                         [e].[Id] = [pe].[EmployeeId]
                                                     LEFT JOIN 
@@ -102,16 +103,15 @@ namespace assignment.Infrastructure.Repositories
 
         }
 
-        public async Task<List<Employee>> GetHighSalaryEmployeesAsync()
+        public async Task<List<EmployeeHighSalaryJoinDate>> GetHighSalaryEmployeesAsync()
         {
             var employees = await _context.Database
-            .SqlQueryRaw<Employee>("""
+            .SqlQueryRaw<EmployeeHighSalaryJoinDate>("""
                         SELECT 
                             [e].[Id],
                             [e].[Name],
                             [e].[Salary],
-                            [e].[JoinedDate],
-                            [e].[DepartmentId]
+                            [e].[JoinedDate]
                         FROM 
                             [dbo].[Employees] [e]
                         WHERE 

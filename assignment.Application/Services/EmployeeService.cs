@@ -2,6 +2,7 @@ namespace assignment.Application.Service
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using assignment.Application.DTOs.Response;
     using assignment.Application.Interface.Gateway;
     using assignment.Application.Interface.UseCase;
     using assignment.Domain.Entities;
@@ -51,7 +52,7 @@ namespace assignment.Application.Service
             return await _employeeRepo.GetAllEmployeeAndProjectAsync();
         }
 
-        public async Task<List<Employee>> GetHighSalaryEmployeesAsync()
+        public async Task<List<EmployeeHighSalaryJoinDate>> GetHighSalaryEmployeesAsync()
         {
             return await _employeeRepo.GetHighSalaryEmployeesAsync();
         }

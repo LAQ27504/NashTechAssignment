@@ -1,5 +1,6 @@
 namespace assignment.API.Controllers
 {
+    using assignment.Application.DTOs.Response;
     using assignment.Application.Interface.UseCase;
     using assignment.Domain.Entities;
     using Microsoft.AspNetCore.Mvc;
@@ -84,7 +85,7 @@ namespace assignment.API.Controllers
         }
 
         [HttpGet("GetHighSalaryEmployeesAsync")]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetHighSalaryEmployeesAsync()
+        public async Task<ActionResult<IEnumerable<EmployeeHighSalaryJoinDate>>> GetHighSalaryEmployeesAsync()
         {
             var employees = await _employeeService.GetHighSalaryEmployeesAsync();
             return Ok(employees);

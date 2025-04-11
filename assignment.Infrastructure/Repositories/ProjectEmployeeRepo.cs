@@ -25,5 +25,10 @@ namespace assignment.Infrastructure.Repositories
             }
             return projectEmployee;
         }
+
+        public async Task<List<ProjectEmployee>> GetAllProjectEmployees()
+        {
+            return await _context.ProjectEmployees.ToListAsync();
+        }
     }
 }

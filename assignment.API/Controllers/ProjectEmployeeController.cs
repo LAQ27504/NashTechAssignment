@@ -26,5 +26,12 @@ namespace assignment.API.Controllers
             }
             return Ok(projectEmployee);
         }
+
+        [HttpGet]
+        public async Task<ActionResult<List<ProjectEmployee>>> GetAllProjectEmployees()
+        {
+            var projectEmployees = await _projectEmployeeService.GetAllProjectEmployeesAsync();
+            return Ok(projectEmployees);
+        }
     }
 }

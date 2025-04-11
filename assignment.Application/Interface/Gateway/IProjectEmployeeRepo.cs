@@ -5,5 +5,6 @@ namespace assignment.Application.Interface.Gateway
     public interface IProjectEmployeeRepo
     {
         Task<ProjectEmployee> GetProjectEmployeeByProjectID(int projectId);
+        Task<List<ProjectEmployee>> GetAllProjectEmployees();
     }
 }

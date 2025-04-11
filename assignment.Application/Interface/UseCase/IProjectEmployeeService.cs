@@ -4,6 +4,6 @@ namespace assignment.Application.Interface.UseCase
     public interface IProjectEmployeeService
     {
         Task<ProjectEmployee> GetProjectEmployeeByIdAsync(int id);
-
+        Task<List<ProjectEmployee>> GetAllProjectEmployeesAsync();
     }
 }
