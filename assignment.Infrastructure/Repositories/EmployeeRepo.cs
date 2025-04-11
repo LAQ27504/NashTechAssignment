@@ -74,5 +74,54 @@ namespace assignment.Infrastructure.Repositories
 
             return employees;
         }
+
+        public async Task<List<EmployeeWithProjectDTO>> GetAllEmployeeAndProjectAsync()
+        {
+            var employees = await _context.Database
+            .SqlQueryRaw<EmployeeWithProjectDTO>("""
+                                                    SELECT 
+                                                        [e].[Id],
+                                                        [e].[Name],
+                                                        [p].[Id] AS [ProjectId],
+                                                        [p].[Name] AS [ProjectName] 
+                                                    FROM 
+                                                        [dbo].[Employees] [e]
+                                                    LEFT JOIN 
+                                                        [dbo].[ProjectEmployee] [pe] 
+                                                    ON
+                                                        [e].[Id] = [pe].[EmployeeId]
+                                                    LEFT JOIN 
+                                                        [dbo].[Projects] [p] 
+                                                    ON
+                                                        [pe].[ProjectId] = [p].[Id]
+                                                    """)
+                                            .AsNoTracking()
+                                            .ToListAsync();
+
+            return employees;
+
+        }
+
+        public async Task<List<Employee>> GetHighSalaryEmployeesAsync()
+        {
+            var employees = await _context.Database
+            .SqlQueryRaw<Employee>("""
+                        SELECT 
+                            [e].[Id],
+                            [e].[Name],
+                            [e].[Salary],
+                            [e].[JoinedDate],
+                            [e].[DepartmentId]
+                        FROM 
+                            [dbo].[Employees] [e]
+                        WHERE 
+                            [e].[Salary] > 100 
+                            AND [e].[JoinedDate] >= '2024-01-01'
+                        """)
+            .AsNoTracking()
+            .ToListAsync();
+
+            return employees;
+        }
     }
 }

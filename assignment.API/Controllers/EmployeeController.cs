@@ -82,5 +82,12 @@ namespace assignment.API.Controllers
             var employees = await _employeeService.GetAllEmployeeAndProjects();
             return Ok(employees);
         }
+
+        [HttpGet("GetHighSalaryEmployeesAsync")]
+        public async Task<ActionResult<IEnumerable<Employee>>> GetHighSalaryEmployeesAsync()
+        {
+            var employees = await _employeeService.GetHighSalaryEmployeesAsync();
+            return Ok(employees);
+        }
     }
 }
