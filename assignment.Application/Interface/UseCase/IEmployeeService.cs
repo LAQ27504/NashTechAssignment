@@ -8,5 +8,8 @@ namespace assignment.Application.Interface.UseCase
         Task<bool> DeleteEmployeeAsync(int id);
         Task<Employee> GetEmployeeByIdAsync(int id);
         Task<List<Employee>> GetAllEmployeesAsync();
+        Task<List<EmployeeWithDepartmentDTO>> GetAllEmployeeAndDepartmentAsync();
+        Task<List<EmployeeWithProjectDTO>> GetAllEmployeeAndProjects();
+        Task<List<Employee>> GetHighSalaryEmployeesAsync();
     }
 }

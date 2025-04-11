@@ -52,5 +52,27 @@ namespace assignment.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return employee;
         }
+
+        public async Task<List<EmployeeWithDepartmentDTO>> GetAllEmployeeAndDepartmentAsync()
+        {
+            var employees = await _context.Database
+            .SqlQueryRaw<EmployeeWithDepartmentDTO>("""
+                                                    SELECT 
+                                                        [e].[Id],
+                                                        [e].[Name],
+                                                        [d].[Id] AS [DepartmentId],
+                                                        [d].[Name] AS [DepartmentName] 
+                                                    FROM 
+                                                        [dbo].[Employees] [e]
+                                                    INNER JOIN 
+                                                        [dbo].[Departments] [d] 
+                                                    ON
+                                                        [e].[DepartmentId] = [d].[Id]
+                                                    """)
+                                            .AsNoTracking()
+                                            .ToListAsync();
+
+            return employees;
+        }
     }
 }

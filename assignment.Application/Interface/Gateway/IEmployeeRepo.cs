@@ -9,5 +9,9 @@ namespace assignment.Application.Interface.Gateway
         Task<Employee> AddEmployee(Employee employee);
         Task<Employee> UpdateEmployee(Employee employee);
         Task<bool> DeleteEmployee(int id);
+
+        Task<List<EmployeeWithDepartmentDTO>> GetAllEmployeeAndDepartmentAsync();
+        Task<List<EmployeeWithProjectDTO>> GetAllEmployeeAndProjectAsync();
+        Task<List<Employee>> GetHighSalaryEmployeesAsync();
     }
 }

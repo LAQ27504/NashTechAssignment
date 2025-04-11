@@ -23,5 +23,54 @@ namespace assignment.API.Controllers
             var departments = await _departmentService.GetAllDepartmentsAsync();
             return Ok(departments);
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Department>> GetDepartmentById(int id)
+        {
+            var department = await _departmentService.GetDepartmentByIdAsync(id);
+            if (department == null)
+            {
+                return Ok(new { Message = "Department not found" });
+            }
+            return Ok(department);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Department>> AddDepartment([FromBody] Department department)
+        {
+            if (department == null)
+            {
+                return Ok(new { Message = "Invalid department data" });
+            }
+
+            var createdDepartment = await _departmentService.AddDepartmentAsync(department);
+            return Ok(createdDepartment);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateDepartment([FromBody] Department department)
+        {
+
+
+            var updated = await _departmentService.UpdateDepartmentAsync(department);
+            if (updated == null)
+            {
+                return Ok(new { Message = "Department not found" });
+            }
+
+            return Ok(new { Message = "Department updated successfully" });
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteDepartment(int id)
+        {
+            var deleted = await _departmentService.DeleteDepartmentAsync(id);
+            if (!deleted)
+            {
+                return Ok(new { Message = "Department not found" });
+            }
+
+            return Ok(new { Message = "Department deleted successfully" });
+        }
     }
 }

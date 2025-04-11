@@ -12,7 +12,7 @@ using assignment.Infrastructure.Persistence.DBContext;
 namespace assignment.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250410023812_InitialCreate")]
+    [Migration("20250411141006_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -274,8 +274,7 @@ namespace assignment.Infrastructure.Migrations
                 {
                     b.Navigation("ProjectEmployees");
 
-                    b.Navigation("Salary")
-                        .IsRequired();
+                    b.Navigation("Salary");
                 });
 
             modelBuilder.Entity("assignment.Domain.Entities.Project", b =>

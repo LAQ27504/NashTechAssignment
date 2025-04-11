@@ -17,6 +17,7 @@ namespace assignment.Infrastructure.Repositories
 
         public async Task<Department> AddDepartmentAsync(Department department)
         {
+
             var result = await _context.Departments.AddAsync(department);
             await _context.SaveChangesAsync();
             return result.Entity;

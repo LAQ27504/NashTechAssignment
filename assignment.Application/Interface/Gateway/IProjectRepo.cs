@@ -9,6 +9,5 @@ namespace assignment.Application.Interface.Gateway
         Task<bool> DeleteProject(int id);
         Task<Project?> GetProjectById(int id);
         Task<List<Project>> GetAllProjects();
-        Task<List<Project>> GetProjectsByEmployeeId(int employeeId);
     }
 }

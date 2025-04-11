@@ -271,8 +271,7 @@ namespace assignment.Infrastructure.Migrations
                 {
                     b.Navigation("ProjectEmployees");
 
-                    b.Navigation("Salary")
-                        .IsRequired();
+                    b.Navigation("Salary");
                 });
 
             modelBuilder.Entity("assignment.Domain.Entities.Project", b =>
