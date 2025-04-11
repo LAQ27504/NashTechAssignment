@@ -1,5 +1,6 @@
 namespace assignment.API.Controllers
 {
+    using assignment.Application.DTOs.Request;
     using assignment.Application.Interface.UseCase;
     using assignment.Domain.Entities;
     using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ namespace assignment.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ProjectEmployee>> GetProjectEmployeeById(int id)
         {
-            var projectEmployee = await _projectEmployeeService.GetProjectEmployeeByIdAsync(id);
+            var projectEmployee = await _projectEmployeeService.GetProjectEmployeeByProjectID(id);
             if (projectEmployee == null)
             {
                 return NotFound();
@@ -30,8 +31,30 @@ namespace assignment.API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ProjectEmployee>>> GetAllProjectEmployees()
         {
-            var projectEmployees = await _projectEmployeeService.GetAllProjectEmployeesAsync();
+            var projectEmployees = await _projectEmployeeService.GetAllProjectEmployees();
             return Ok(projectEmployees);
         }
+        [HttpPost]
+        public async Task<ActionResult<ProjectEmployee>> AddProjectEmployee([FromBody] ProjectEmployeeRequest projectEmployee)
+        {
+            if (projectEmployee == null)
+            {
+                return BadRequest();
+            }
+            var createdProjectEmployee = await _projectEmployeeService.AddProjectEmployee(projectEmployee);
+            return Ok(createdProjectEmployee);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProjectEmployee(ProjectEmployeeRequest projectEmployee)
+        {
+            var success = await _projectEmployeeService.DeletProjectEmployee(projectEmployee);
+            if (!success)
+            {
+                return NotFound();
+            }
+            return Ok("Delete successfully");
+        }
+
     }
 }

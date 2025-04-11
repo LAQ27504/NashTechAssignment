@@ -47,9 +47,17 @@ namespace assignment.Infrastructure.Repositories
             return await _context.Employees.FindAsync(id);
         }
 
-        public async Task<Employee> UpdateEmployee(Employee employee)
+        public async Task<Employee> UpdateEmployee(int id, Employee employee)
         {
-            _context.Employees.Update(employee);
+            var updateEmployee = await _context.Employees.FindAsync(id);
+            if (updateEmployee == null)
+            {
+                throw new KeyNotFoundException("Employee not found");
+            }
+            updateEmployee.Name = employee.Name;
+            updateEmployee.JoinedDate = employee.JoinedDate;
+            updateEmployee.DepartmentId = employee.DepartmentId;
+            _context.Employees.Update(updateEmployee);
             await _context.SaveChangesAsync();
             return employee;
         }

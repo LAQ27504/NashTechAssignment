@@ -21,7 +21,6 @@ namespace assignment.Application.Service
         {
             Employee newEmployee = new Employee
             {
-                Id = employee.Id,
                 Name = employee.Name,
                 JoinedDate = employee.JoinedDate,
                 DepartmentId = employee.DepartmentId,
@@ -49,16 +48,15 @@ namespace assignment.Application.Service
             return await _employeeRepo.GetEmployeeById(id);
         }
 
-        public async Task<Employee> UpdateEmployeeAsync(EmployeeRequest employee)
+        public async Task<Employee> UpdateEmployeeAsync(int id, EmployeeRequest employee)
         {
             Employee updateEmployee = new Employee
             {
-                Id = employee.Id,
                 Name = employee.Name,
                 JoinedDate = employee.JoinedDate,
                 DepartmentId = employee.DepartmentId,
             };
-            return await _employeeRepo.UpdateEmployee(updateEmployee);
+            return await _employeeRepo.UpdateEmployee(id, updateEmployee);
         }
 
         public async Task<List<EmployeeWithProjectDTO>> GetAllEmployeeAndProjects()

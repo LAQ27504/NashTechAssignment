@@ -10,7 +10,7 @@ namespace assignment.Application.Interface.Gateway
 
         Task<Department> AddDepartmentAsync(Department department);
 
-        Task<Department> UpdateDepartmentAsync(Department department);
+        Task<Department> UpdateDepartmentAsync(int id, Department department);
 
         Task<bool> DeleteDepartmentAsync(int id);
     }

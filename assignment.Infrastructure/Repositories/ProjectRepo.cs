@@ -42,15 +42,15 @@ namespace assignment.Infrastructure.Repositories
             return await _context.Projects.FindAsync(id);
         }
 
-        public async Task<Project> UpdateProject(Project project)
+        public async Task<Project> UpdateProject(int id, Project project)
         {
-            var existingProject = await _context.Projects.FindAsync(project.Id);
+            var existingProject = await _context.Projects.FindAsync(id);
             if (existingProject == null)
             {
                 throw new KeyNotFoundException("Project not found");
             }
 
-            existingProject = project;
+            existingProject.Name = project.Name;
 
             await _context.SaveChangesAsync();
             return existingProject;

@@ -47,14 +47,14 @@ namespace assignment.Infrastructure.Repositories
                 .FirstOrDefaultAsync(d => d.Id == id);
         }
 
-        public async Task<Department> UpdateDepartmentAsync(Department department)
+        public async Task<Department> UpdateDepartmentAsync(int id, Department department)
         {
-            var updateDepartment = await _context.Departments.FindAsync(department.Id);
+            var updateDepartment = await _context.Departments.FindAsync(id);
             if (updateDepartment == null)
             {
                 throw new Exception("Department not found");
             }
-            updateDepartment = department;
+            updateDepartment.Name = department.Name;
             await _context.SaveChangesAsync();
             return updateDepartment;
         }

@@ -10,7 +10,7 @@ namespace assignment.Application.Interface.UseCase
         Task<List<Department>> GetAllDepartmentsAsync();
         Task<Department?> GetDepartmentByIdAsync(int id);
         Task<Department> AddDepartmentAsync(DepartmentRequest department);
-        Task<Department> UpdateDepartmentAsync(DepartmentRequest department);
+        Task<Department> UpdateDepartmentAsync(int id, DepartmentRequest department);
         Task<bool> DeleteDepartmentAsync(int id);
     }
 }

@@ -49,9 +49,9 @@ namespace assignment.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateDepartment([FromBody] DepartmentRequest department)
+        public async Task<IActionResult> UpdateDepartment(int id, [FromBody] DepartmentRequest department)
         {
-            var updated = await _departmentService.UpdateDepartmentAsync(department);
+            var updated = await _departmentService.UpdateDepartmentAsync(id, department);
             if (updated == null)
             {
                 return Ok(new { Message = "Department not found" });

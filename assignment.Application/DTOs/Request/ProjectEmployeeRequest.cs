@@ -1,10 +1,8 @@
 namespace assignment.Application.DTOs.Request
 {
-    public class SalaryRequest
+    public class ProjectEmployeeRequest
     {
-
-        public int Salary { get; set; }
-
         public int EmployeeId { get; set; }
+        public int ProjectId { get; set; }
     }
 }

@@ -5,7 +5,6 @@ namespace assignment.Application.DTOs.Request
 
     public class DepartmentRequest
     {
-        public int id { get; set; }
         public string Name { get; set; }
     }
 }

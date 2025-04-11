@@ -52,14 +52,15 @@ namespace assignment.Infrastructure.Repositories
             return salary;
         }
 
-        public async Task<Salaries> UpdateSalaryAsync(Salaries salary)
+        public async Task<Salaries> UpdateSalaryAsync(int id, Salaries salary)
         {
-            var updateSalary = await _context.Salaries.FindAsync(salary.Id);
+            var updateSalary = await _context.Salaries.FindAsync(id);
             if (updateSalary == null)
             {
                 throw new KeyNotFoundException("Salary not found");
             }
-            updateSalary = salary;
+            updateSalary.Salary = salary.Salary;
+            updateSalary.EmployeeId = salary.EmployeeId;
             _context.Salaries.Update(updateSalary);
             await _context.SaveChangesAsync();
 

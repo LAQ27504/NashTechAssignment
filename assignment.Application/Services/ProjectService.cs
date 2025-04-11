@@ -20,7 +20,6 @@ namespace assignment.Application.Services
         {
             Project newProject = new Project
             {
-                Id = project.Id,
                 Name = project.Name,
             };
             return await _projectRepo.AddProject(newProject);
@@ -41,14 +40,13 @@ namespace assignment.Application.Services
             return await _projectRepo.GetProjectById(id);
         }
 
-        public async Task<Project> UpdateProjectAsync(ProjectRequest project)
+        public async Task<Project> UpdateProjectAsync(int id, ProjectRequest project)
         {
             Project updateProject = new Project
             {
-                Id = project.Id,
                 Name = project.Name,
             };
-            return await _projectRepo.UpdateProject(updateProject);
+            return await _projectRepo.UpdateProject(id, updateProject);
         }
     }
 }

@@ -22,7 +22,6 @@ namespace assignment.Application.Services
             {
                 EmployeeId = salary.EmployeeId,
                 Salary = salary.Salary,
-                Id = salary.Id
             };
 
             return await _salaryRepository.AddSalaryAsync(newSalary);
@@ -43,15 +42,14 @@ namespace assignment.Application.Services
             return await _salaryRepository.GetSalaryAsync(id);
         }
 
-        public async Task<Salaries> UpdateSalaryAsync(SalaryRequest salary)
+        public async Task<Salaries> UpdateSalaryAsync(int id, SalaryRequest salary)
         {
             Salaries updateSalary = new Salaries
             {
                 EmployeeId = salary.EmployeeId,
                 Salary = salary.Salary,
-                Id = salary.Id
             };
-            return await _salaryRepository.UpdateSalaryAsync(updateSalary);
+            return await _salaryRepository.UpdateSalaryAsync(id, updateSalary);
         }
     }
 }

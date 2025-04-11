@@ -49,9 +49,9 @@ namespace assignment.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Salaries>> UpdateSalary([FromBody] SalaryRequest salary)
+        public async Task<ActionResult<Salaries>> UpdateSalary(int id, [FromBody] SalaryRequest salary)
         {
-            var updateSalaries = await _salaryService.UpdateSalaryAsync(salary);
+            var updateSalaries = await _salaryService.UpdateSalaryAsync(id, salary);
             if (updateSalaries == null)
             {
                 return NotFound(new { Message = "Salary not found" });

@@ -55,9 +55,9 @@ namespace assignment.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Employee>> UpdateEmployee([FromBody] EmployeeRequest employee)
+        public async Task<ActionResult<Employee>> UpdateEmployee(int id, [FromBody] EmployeeRequest employee)
         {
-            var updatedEmployee = await _employeeService.UpdateEmployeeAsync(employee);
+            var updatedEmployee = await _employeeService.UpdateEmployeeAsync(id, employee);
             if (updatedEmployee == null)
             {
                 return NotFound();

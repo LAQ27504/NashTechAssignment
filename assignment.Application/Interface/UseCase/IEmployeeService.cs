@@ -6,7 +6,7 @@ namespace assignment.Application.Interface.UseCase
     public interface IEmployeeService
     {
         Task<Employee> AddEmployeeAsync(EmployeeRequest employee);
-        Task<Employee> UpdateEmployeeAsync(EmployeeRequest employee);
+        Task<Employee> UpdateEmployeeAsync(int id, EmployeeRequest employee);
         Task<bool> DeleteEmployeeAsync(int id);
         Task<Employee> GetEmployeeByIdAsync(int id);
         Task<List<Employee>> GetAllEmployeesAsync();

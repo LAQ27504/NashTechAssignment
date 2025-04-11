@@ -46,9 +46,9 @@ namespace assignment.API.Controllers
             return Ok(createdProject);
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult<Project>> UpdateProject([FromBody] ProjectRequest project)
+        public async Task<ActionResult<Project>> UpdateProject(int id, [FromBody] ProjectRequest project)
         {
-            var updatedProject = await _projectService.UpdateProjectAsync(project);
+            var updatedProject = await _projectService.UpdateProjectAsync(id, project);
             if (updatedProject == null)
             {
                 return NotFound(new { Message = "Project not found" });

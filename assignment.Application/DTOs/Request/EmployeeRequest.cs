@@ -3,7 +3,6 @@ namespace assignment.Application.DTOs.Request
 
     public class EmployeeRequest
     {
-        public int Id { get; set; }
 
         public DateTime JoinedDate { get; set; }
 

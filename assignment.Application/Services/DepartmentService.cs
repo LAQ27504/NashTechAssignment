@@ -18,7 +18,6 @@ namespace assignment.Application.Service
         {
             var departmentCreate = new Department
             {
-                Id = department.id,
                 Name = department.Name,
             };
             return await _departmentRepo.AddDepartmentAsync(departmentCreate);
@@ -39,15 +38,14 @@ namespace assignment.Application.Service
             return await _departmentRepo.GetDepartmentByIdAsync(id);
         }
 
-        public async Task<Department> UpdateDepartmentAsync(DepartmentRequest department)
+        public async Task<Department> UpdateDepartmentAsync(int id, DepartmentRequest department)
         {
             var departmentUpdate = new Department
             {
-                Id = department.id,
                 Name = department.Name,
             };
 
-            return await _departmentRepo.UpdateDepartmentAsync(departmentUpdate);
+            return await _departmentRepo.UpdateDepartmentAsync(id, departmentUpdate);
         }
     }
 }
