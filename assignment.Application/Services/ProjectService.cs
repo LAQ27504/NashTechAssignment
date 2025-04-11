@@ -1,5 +1,6 @@
 namespace assignment.Application.Services
 {
+    using assignment.Application.DTOs.Request;
     using assignment.Application.Interface.Gateway;
     using assignment.Application.Interface.UseCase;
     using assignment.Domain.Entities;
@@ -15,9 +16,14 @@ namespace assignment.Application.Services
             _projectRepo = projectRepo;
         }
 
-        public async Task<Project> AddProjectAsync(Project project)
+        public async Task<Project> AddProjectAsync(ProjectRequest project)
         {
-            return await _projectRepo.AddProject(project);
+            Project newProject = new Project
+            {
+                Id = project.Id,
+                Name = project.Name,
+            };
+            return await _projectRepo.AddProject(newProject);
         }
 
         public async Task<bool> DeleteProjectAsync(int id)
@@ -35,9 +41,14 @@ namespace assignment.Application.Services
             return await _projectRepo.GetProjectById(id);
         }
 
-        public async Task<Project> UpdateProjectAsync(Project project)
+        public async Task<Project> UpdateProjectAsync(ProjectRequest project)
         {
-            return await _projectRepo.UpdateProject(project);
+            Project updateProject = new Project
+            {
+                Id = project.Id,
+                Name = project.Name,
+            };
+            return await _projectRepo.UpdateProject(updateProject);
         }
     }
 }

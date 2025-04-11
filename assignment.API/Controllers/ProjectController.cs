@@ -1,5 +1,6 @@
 namespace assignment.API.Controllers
 {
+    using assignment.Application.DTOs.Request;
     using assignment.Application.Interface.UseCase;
     using assignment.Domain.Entities;
     using Microsoft.AspNetCore.Mvc;
@@ -34,7 +35,7 @@ namespace assignment.API.Controllers
             return Ok(project);
         }
         [HttpPost]
-        public async Task<ActionResult<Project>> AddProject([FromBody] Project project)
+        public async Task<ActionResult<Project>> AddProject([FromBody] ProjectRequest project)
         {
             if (project == null)
             {
@@ -45,7 +46,7 @@ namespace assignment.API.Controllers
             return Ok(createdProject);
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult<Project>> UpdateProject([FromBody] Project project)
+        public async Task<ActionResult<Project>> UpdateProject([FromBody] ProjectRequest project)
         {
             var updatedProject = await _projectService.UpdateProjectAsync(project);
             if (updatedProject == null)

@@ -1,3 +1,4 @@
+using assignment.Application.DTOs.Request;
 using assignment.Application.Interface.Gateway;
 using assignment.Application.Interface.UseCase;
 using assignment.Domain.Entities;
@@ -13,9 +14,14 @@ namespace assignment.Application.Service
             _departmentRepo = departmentRepo;
         }
 
-        public async Task<Department> AddDepartmentAsync(Department department)
+        public async Task<Department> AddDepartmentAsync(DepartmentRequest department)
         {
-            return await _departmentRepo.AddDepartmentAsync(department);
+            var departmentCreate = new Department
+            {
+                Id = department.id,
+                Name = department.Name,
+            };
+            return await _departmentRepo.AddDepartmentAsync(departmentCreate);
         }
 
         public async Task<bool> DeleteDepartmentAsync(int id)
@@ -33,9 +39,15 @@ namespace assignment.Application.Service
             return await _departmentRepo.GetDepartmentByIdAsync(id);
         }
 
-        public async Task<Department> UpdateDepartmentAsync(Department department)
+        public async Task<Department> UpdateDepartmentAsync(DepartmentRequest department)
         {
-            return await _departmentRepo.UpdateDepartmentAsync(department);
+            var departmentUpdate = new Department
+            {
+                Id = department.id,
+                Name = department.Name,
+            };
+
+            return await _departmentRepo.UpdateDepartmentAsync(departmentUpdate);
         }
     }
 }

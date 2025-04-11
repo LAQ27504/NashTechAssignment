@@ -1,5 +1,6 @@
 namespace assignment.API.Controllers
 {
+    using assignment.Application.DTOs.Request;
     using assignment.Application.Interface.UseCase;
     using assignment.Domain.Entities;
     using Microsoft.AspNetCore.Mvc;
@@ -36,7 +37,7 @@ namespace assignment.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Salaries>> AddSalary([FromBody] Salaries salary)
+        public async Task<ActionResult<Salaries>> AddSalary([FromBody] SalaryRequest salary)
         {
             if (salary == null)
             {
@@ -48,7 +49,7 @@ namespace assignment.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Salaries>> UpdateSalary([FromBody] Salaries salary)
+        public async Task<ActionResult<Salaries>> UpdateSalary([FromBody] SalaryRequest salary)
         {
             var updateSalaries = await _salaryService.UpdateSalaryAsync(salary);
             if (updateSalaries == null)

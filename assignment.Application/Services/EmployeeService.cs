@@ -2,6 +2,7 @@ namespace assignment.Application.Service
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using assignment.Application.DTOs.Request;
     using assignment.Application.DTOs.Response;
     using assignment.Application.Interface.Gateway;
     using assignment.Application.Interface.UseCase;
@@ -16,10 +17,16 @@ namespace assignment.Application.Service
             _employeeRepo = employeeRepo;
         }
 
-        public async Task<Employee> AddEmployeeAsync(Employee employee)
+        public async Task<Employee> AddEmployeeAsync(EmployeeRequest employee)
         {
-
-            return await _employeeRepo.AddEmployee(employee);
+            Employee newEmployee = new Employee
+            {
+                Id = employee.Id,
+                Name = employee.Name,
+                JoinedDate = employee.JoinedDate,
+                DepartmentId = employee.DepartmentId,
+            };
+            return await _employeeRepo.AddEmployee(newEmployee);
         }
 
         public async Task<bool> DeleteEmployeeAsync(int id)
@@ -42,9 +49,16 @@ namespace assignment.Application.Service
             return await _employeeRepo.GetEmployeeById(id);
         }
 
-        public async Task<Employee> UpdateEmployeeAsync(Employee employee)
+        public async Task<Employee> UpdateEmployeeAsync(EmployeeRequest employee)
         {
-            return await _employeeRepo.UpdateEmployee(employee);
+            Employee updateEmployee = new Employee
+            {
+                Id = employee.Id,
+                Name = employee.Name,
+                JoinedDate = employee.JoinedDate,
+                DepartmentId = employee.DepartmentId,
+            };
+            return await _employeeRepo.UpdateEmployee(updateEmployee);
         }
 
         public async Task<List<EmployeeWithProjectDTO>> GetAllEmployeeAndProjects()

@@ -1,5 +1,6 @@
 namespace assignment.API.Controllers
 {
+    using assignment.Application.DTOs.Request;
     using assignment.Application.Interface.UseCase;
     using assignment.Domain.Entities;
     using Microsoft.AspNetCore.Mvc;
@@ -36,7 +37,7 @@ namespace assignment.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Department>> AddDepartment([FromBody] Department department)
+        public async Task<ActionResult<Department>> AddDepartment([FromBody] DepartmentRequest department)
         {
             if (department == null)
             {
@@ -48,10 +49,8 @@ namespace assignment.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateDepartment([FromBody] Department department)
+        public async Task<IActionResult> UpdateDepartment([FromBody] DepartmentRequest department)
         {
-
-
             var updated = await _departmentService.UpdateDepartmentAsync(department);
             if (updated == null)
             {

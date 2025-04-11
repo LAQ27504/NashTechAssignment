@@ -1,5 +1,6 @@
 namespace assignment.API.Controllers
 {
+    using assignment.Application.DTOs.Request;
     using assignment.Application.DTOs.Response;
     using assignment.Application.Interface.UseCase;
     using assignment.Domain.Entities;
@@ -36,7 +37,7 @@ namespace assignment.API.Controllers
             return Ok(employee);
         }
         [HttpPost]
-        public async Task<ActionResult<Employee>> AddEmployee([FromBody] Employee employee)
+        public async Task<ActionResult<Employee>> AddEmployee([FromBody] EmployeeRequest employee)
         {
             if (employee == null)
             {
@@ -54,7 +55,7 @@ namespace assignment.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Employee>> UpdateEmployee([FromBody] Employee employee)
+        public async Task<ActionResult<Employee>> UpdateEmployee([FromBody] EmployeeRequest employee)
         {
             var updatedEmployee = await _employeeService.UpdateEmployeeAsync(employee);
             if (updatedEmployee == null)

@@ -5,6 +5,7 @@ namespace assignment.Application.Services
     using assignment.Application.Interface.Gateway;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using assignment.Application.DTOs.Request;
 
     public class SalaryService : ISalaryService
     {
@@ -15,9 +16,16 @@ namespace assignment.Application.Services
             _salaryRepository = salaryRepository;
         }
 
-        public async Task<Salaries> AddSalaryAsync(Salaries salary)
+        public async Task<Salaries> AddSalaryAsync(SalaryRequest salary)
         {
-            return await _salaryRepository.AddSalaryAsync(salary);
+            Salaries newSalary = new Salaries
+            {
+                EmployeeId = salary.EmployeeId,
+                Salary = salary.Salary,
+                Id = salary.Id
+            };
+
+            return await _salaryRepository.AddSalaryAsync(newSalary);
         }
 
         public async Task<bool> DeleteSalaryAsync(int id)
@@ -35,9 +43,15 @@ namespace assignment.Application.Services
             return await _salaryRepository.GetSalaryAsync(id);
         }
 
-        public async Task<Salaries> UpdateSalaryAsync(Salaries salary)
+        public async Task<Salaries> UpdateSalaryAsync(SalaryRequest salary)
         {
-            return await _salaryRepository.UpdateSalaryAsync(salary);
+            Salaries updateSalary = new Salaries
+            {
+                EmployeeId = salary.EmployeeId,
+                Salary = salary.Salary,
+                Id = salary.Id
+            };
+            return await _salaryRepository.UpdateSalaryAsync(updateSalary);
         }
     }
 }
