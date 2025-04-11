@@ -86,26 +86,22 @@ namespace assignment.Infrastructure.Repositories
 
         public async Task<List<EmployeeWithProjectDTO>> GetAllEmployeeAndProjectAsync()
         {
-            var employees = await _context.Database
-            .SqlQueryRaw<EmployeeWithProjectDTO>("""
-                                                    SELECT 
-                                                        [e].[Id],
-                                                        [e].[Name],
-                                                        [p].[Id] AS [ProjectId],
-                                                        [p].[Name] AS [ProjectName] 
-                                                    FROM 
-                                                        [dbo].[Employees] [e]
-                                                    LEFT JOIN 
-                                                        [dbo].[ProjectEmployees] [pe] 
-                                                    ON
-                                                        [e].[Id] = [pe].[EmployeeId]
-                                                    LEFT JOIN 
-                                                        [dbo].[Projects] [p] 
-                                                    ON
-                                                        [pe].[ProjectId] = [p].[Id]
-                                                    """)
-                                            .AsNoTracking()
-                                            .ToListAsync();
+            var employees = await _context.Employees
+            .Include(e => e.ProjectEmployees) // Include the junction table
+            .ThenInclude(ep => ep.Project) // Include related Projects
+            .Select(e => new EmployeeWithProjectDTO
+            {
+                Id = e.Id,
+                Name = e.Name,
+                Projects = e.ProjectEmployees
+                    .Select(ep => new Project()
+                    {
+                        Id = ep.Project.Id,
+                        Name = ep.Project.Name,
+                    })
+                    .ToList()
+            })
+            .ToListAsync();
 
             return employees;
 
