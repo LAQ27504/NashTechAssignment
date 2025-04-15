@@ -12,7 +12,8 @@ namespace NashTechRookie.Models
 
         [Required]
         public string? LastName { get; set; }
-        public string FullName => $"{LastName} {FirstName}";
+
+        public string FullName => $"{FirstName} {LastName}";
 
         [Required]
         public Gender? Gender { get; set; }
@@ -29,6 +30,7 @@ namespace NashTechRookie.Models
         public bool IsGraduated { get; set; }
 
         public string IsGraduatedString => IsGraduated ? "Yes" : "No";
+
         public string DateOfBirthString => DateOfBirth.ToString("dd/MM/yyyy");
 
         public Person()

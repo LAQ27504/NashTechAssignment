@@ -148,7 +148,7 @@ namespace NashTechRookie.Controllers
             try
             {
                 string deletedPersonName = person.FullName;
-                personService.Delete(person);
+                personService.Delete(id);
                 return RedirectToAction("Confirmation", new { deletedPersonName });
             }
             catch (Exception ex)

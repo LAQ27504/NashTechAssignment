@@ -154,7 +154,7 @@ public class PersonControllerTest
         }
 
         [Test]
-        public void Create_Post_ValidModel_RedirectsToIndex()
+        public void Create_ValidModel_RedirectsToIndex()
         {
             // Arrange
             var person = new Person(1, "Rebecca", "Chambers", Gender.Female,
@@ -212,7 +212,7 @@ public class PersonControllerTest
 
 
         [Test]
-        public void Delete_Post_ExistingId_RedirectsToConfirmation()
+        public void Delete_ExistingId_RedirectsToConfirmation()
         {
             // Arrange
             var tempData = new TempDataDictionary(new DefaultHttpContext(), Mock.Of<ITempDataProvider>());
@@ -226,14 +226,14 @@ public class PersonControllerTest
             var result = _personController.Delete(1) as RedirectToActionResult;
 
             // Assert
-            _personServiceMock.Verify(x => x.Delete(person), Times.Once);
+            _personServiceMock.Verify(x => x.Delete(person.Id), Times.Once);
             Assert.That(result, Is.Not.Null);
             Assert.That(result.ActionName, Is.EqualTo("Confirmation"));
             Assert.That(result.RouteValues["deletedPersonName"], Is.EqualTo(person.FullName));
         }
 
         [Test]
-        public void Edit_Get_ExistingId_ReturnsDefaultViewWithModel()
+        public void Edit_ExistingId_ReturnsDefaultViewWithModel()
         {
             // Arrange
             var person = new Person(2, "Albert", "Wesker", Gender.Male,
@@ -252,7 +252,7 @@ public class PersonControllerTest
 
 
         [Test]
-        public void Edit_Get_NonexistentId_ReturnsNotFound()
+        public void Edit_NonexistentId_ReturnsNotFound()
         {
             // Arrange
             _personServiceMock.Setup(x => x.GetPersonById(99)).Returns((Person)null);
@@ -265,7 +265,7 @@ public class PersonControllerTest
         }
 
         [Test]
-        public void Edit_Post_ValidModel_RedirectsToIndex()
+        public void Edit_ValidModel_RedirectsToIndex()
         {
             // Arrange
             var person = new Person(3, "Ada", "Wong", Gender.Female,

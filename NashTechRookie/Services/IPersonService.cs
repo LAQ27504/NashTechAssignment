@@ -15,16 +15,16 @@ namespace NashTechRookie.Services
 
         Person? GetPersonById(int id);
 
-        void Create(
+        Person Create(
             Person person
         );
 
-        void Update(
+        Person Update(
             Person person
         );
 
-        void Delete(
-            Person person
+        Person Delete(
+            int id
         );
 
         List<Person> ListAll();

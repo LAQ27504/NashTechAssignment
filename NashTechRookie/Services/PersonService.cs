@@ -53,14 +53,15 @@ namespace NashTechRookie.Services
             return new FileModel(fileContent, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
 
-        public void Create(Person person)
+        public Person Create(Person person)
         {
             // Assign a new ID (if your data source doesn’t handle this automatically)
             person.Id = PersonData.Persons.Any() ? PersonData.Persons.Max(p => p.Id) + 1 : 1;
             PersonData.Persons.Add(person);
+            return person;
         }
 
-        public void Update(Person person)
+        public Person Update(Person person)
         {
             var personToUpdate = PersonData.Persons.SingleOrDefault(p => p.Id == person.Id);
             if (personToUpdate != null)
@@ -69,15 +70,16 @@ namespace NashTechRookie.Services
                     p.Id == person.Id ? person : p).ToList();
             }
 
-            return;
+            return person;
         }
 
-        public void Delete(Person person)
+        public Person Delete(int id)
         {
-            PersonData.Persons = PersonData.Persons.Where(p => p.Id != person.Id).ToList();
+            var person = PersonData.Persons.SingleOrDefault(p => p.Id == id);
+            PersonData.Persons = PersonData.Persons.Where(p => p.Id != id).ToList();
             UpdateIdForList();
 
-            return;
+            return person;
         }
 
         public void UpdateIdForList()
