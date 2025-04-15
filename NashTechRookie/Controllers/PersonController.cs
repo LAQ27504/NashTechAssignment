@@ -4,50 +4,41 @@ using NashTechRookie.Services;
 
 namespace NashTechRookie.Controllers
 {
-    public class PersonController : Controller
+    public class PersonController(IPersonService personService) : Controller
     {
-        private readonly IPersonService _personService;
-        private readonly IPerson _person;
-
-        public PersonController(IPersonService personService, IPerson person)
-        {
-            _person = person;
-            //_person = person;
-            _personService = personService;
-        }
-
+        [HttpGet]
         public IActionResult Index()
         {
-            return View(_personService.GetAll());
+            return View(personService.GetAll());
         }
 
+        [HttpGet]
         public IActionResult GetMales()
         {
-            var males = _personService.GetMales();
-
-            return View(males);  // Pass data to the View
+            var males = personService.GetMales();
+            return View(males);
         }
 
+        [HttpGet]
         public IActionResult GetOldestPerson()
         {
-            var oldestPerson = _personService.GetOldestPerson();
-
+            var oldestPerson = personService.GetOldestPerson();
             return View(oldestPerson);
         }
 
+        [HttpGet]
         public IActionResult GetFullNames()
         {
-            var fullNames = _personService.GetPersonsFullName();
-
+            var fullNames = personService.GetPersonsFullName();
             return View(fullNames);
         }
 
+        [HttpGet]
         public IActionResult GetBirthYearWithAction(string action)
         {
             if (string.IsNullOrEmpty(action))
             {
                 ViewBag.Message = "Action is required";
-
                 return View("Error");
             }
 
@@ -62,31 +53,31 @@ namespace NashTechRookie.Controllers
             };
         }
 
+        [HttpGet]
         public IActionResult GetBirthYearLower()
         {
-            var persons = _personService.GetPersonsByBirthYearWithAction("lower");
-
+            var persons = personService.GetPersonsByBirthYearWithAction("lower");
             return View(persons);
         }
 
+        [HttpGet]
         public IActionResult GetBirthYearGreater()
         {
-            var persons = _personService.GetPersonsByBirthYearWithAction("greater");
-
+            var persons = personService.GetPersonsByBirthYearWithAction("greater");
             return View(persons);
         }
 
+        [HttpGet]
         public IActionResult GetBirthYearEqual()
         {
-            var persons = _personService.GetPersonsByBirthYearWithAction("equal");
-
+            var persons = personService.GetPersonsByBirthYearWithAction("equal");
             return View(persons);
         }
 
+        [HttpGet]
         public IActionResult ExportToExcel()
         {
-            var fileResponse = _personService.ExportToExcel();
-
+            var fileResponse = personService.ExportToExcel();
             return File(fileResponse.FileContent, fileResponse.ContentType, fileResponse.FileName);
         }
 
@@ -96,16 +87,13 @@ namespace NashTechRookie.Controllers
             return View();
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Person person)
         {
-            Console.WriteLine("Person");
-            Console.WriteLine(person);
             if (person != null)
             {
-                _person.Create(person);
+                personService.Create(person);
                 return RedirectToAction("Index");
             }
             return View(person);
@@ -114,7 +102,7 @@ namespace NashTechRookie.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var person = _personService.GetPersonById(id);
+            var person = personService.GetPersonById(id);
             if (person == null)
             {
                 return NotFound();
@@ -122,7 +110,6 @@ namespace NashTechRookie.Controllers
             return View(person);
         }
 
-        // POST: Handle the Edit form submission
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Person person)
@@ -137,7 +124,7 @@ namespace NashTechRookie.Controllers
             {
                 try
                 {
-                    _person.Update(person);
+                    personService.Update(person);
                     return RedirectToAction("Index");
                 }
                 catch (Exception ex)
@@ -148,12 +135,11 @@ namespace NashTechRookie.Controllers
             return View(person);
         }
 
-
-        [HttpPost]
+        [HttpDelete]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
-            var person = _personService.GetPersonById(id);
+            var person = personService.GetPersonById(id);
             if (person == null)
             {
                 return NotFound();
@@ -161,37 +147,34 @@ namespace NashTechRookie.Controllers
 
             try
             {
-                string deletedPersonName = person.FullName; // Store the name before deleting
-                _person.Delete(person);
+                string deletedPersonName = person.FullName;
+                personService.Delete(person);
                 return RedirectToAction("Confirmation", new { deletedPersonName });
             }
             catch (Exception ex)
             {
-                // If deletion fails, redirect back to the Details view with an error message
                 TempData["ErrorMessage"] = $"An error occurred while deleting the person: {ex.Message}";
                 return RedirectToAction("Details", new { id });
             }
         }
 
-        // GET: Display the confirmation message after deletion
         [HttpGet]
         public IActionResult Confirmation(string deletedPersonName)
         {
             return View((object)deletedPersonName);
         }
 
-
+        [HttpGet]
         public IActionResult ListAll()
         {
-            var persons = _person.ListAll();
-
+            var persons = personService.ListAll();
             return View(persons);
         }
 
         [HttpGet]
         public IActionResult Details(int id)
         {
-            var person = _personService.GetPersonById(id);
+            var person = personService.GetPersonById(id);
             if (person == null)
             {
                 return NotFound();

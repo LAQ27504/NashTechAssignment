@@ -4,7 +4,7 @@ using NashTechRookie.Models;
 
 namespace NashTechRookie.Services
 {
-    public class PersonService : IPersonService, IPerson
+    public class PersonService : IPersonService
     {
 
         public List<Person> GetAll()

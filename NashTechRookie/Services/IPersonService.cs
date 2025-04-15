@@ -14,5 +14,19 @@ namespace NashTechRookie.Services
         int GetLastId();
 
         Person? GetPersonById(int id);
+
+        void Create(
+            Person person
+        );
+
+        void Update(
+            Person person
+        );
+
+        void Delete(
+            Person person
+        );
+
+        List<Person> ListAll();
     }
 }
